@@ -7,7 +7,7 @@ const PORT = 8080;
 app.set('view engine', 'ejs');
 
 //use res.render to load up an ejs view file//index page 
-app.get('./', (req, res) => {
+app.get('/', (req, res) => {
   res.render('pages/index');
 });
 
