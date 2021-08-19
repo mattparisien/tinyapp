@@ -9,6 +9,14 @@ const urlDatabase = {
   "9sm5xK": "http://www.google.com"
 };
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the index page!');
+});
+
+app.get('/urls', (req, res) => {
+  res.render('urls_index', urlDatabase);
+});
+
 app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`)
+  console.log(`Server is listening on port ${PORT}`);
 });
