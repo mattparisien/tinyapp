@@ -8,12 +8,12 @@ app.set('view engine', 'ejs');
 
 //use res.render to load up an ejs view file//index page 
 app.get('/', (req, res) => {
-  var mascots = [
+  const mascots = [
     { name: 'Sammy', organization: "DigitalOcean", birth_year: 2012},
     { name: 'Tux', organization: "Linux", birth_year: 1996},
     { name: 'Moby Dock', organization: "Docker", birth_year: 2013}
   ];
-  var tagline = "No programming concept is complete without a cute animal mascot.";
+  const tagline = "No programming concept is complete without a cute animal mascot.";
 
   res.render('pages/index', {
     mascots: mascots,
@@ -28,28 +28,4 @@ app.get('/about', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`)
-})
-
-
-
-// const urlDatabase = {
-//   "b2xVn2": "http://www.lighthouselabs.ca",
-//   "9sm5xK": "http://www.google.com"
-// };
-
-// app.get('/', (req, res) => { // '/' is called the root path
-//   res.send('hey!')
-// });
-
-// app.get("/urls.json", (req, res) => {
-//   res.json(urlDatabase);
-// }); 
-
-// app.get("/hello", (req, res) => {
-//   res.send("<html><body>Hello <b>World</b></body></html>\n");
-// });
-
-// app.listen(PORT, () => {
-//   console.log(`App is listening on port ${PORT}!`);
-// });
-
+});
