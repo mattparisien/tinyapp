@@ -2,11 +2,8 @@ const express = require('express');
 const app = express();
 const PORT = 8080;
 
-//ejs: Embedded Javascript Templates
-//set the view engine for the express app to ejs
 app.set('view engine', 'ejs');
 
-//use res.render to load up an ejs view file//index page 
 app.get('/', (req, res) => {
   const mascots = [
     { name: 'Sammy', organization: "DigitalOcean", birth_year: 2012},
