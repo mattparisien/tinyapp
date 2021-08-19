@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
   ];
   const tagline = "No programming concept is complete without a cute animal mascot.";
 
-  res.render('pages/index', {
+  res.render('pages/index', { //when we use res.render we first provide it with the name of the template, and we also pass along an object
     mascots: mascots,
     tagline: tagline
   });
