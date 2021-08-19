@@ -20,8 +20,9 @@ app.get('/urls', (req, res) => {
 });
 
 app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a route parameter
-  const templateVars = {shortURL: req.params.shortURL, longURL:" "}
-  res.render('urls_show', templateVars)
+  const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL]}
+  res.render('urls_show', templateVars);
+  console.log(req.params.shortURL)
 })
 
 app.listen(PORT, () => {
