@@ -4,6 +4,15 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 const PORT = 8080;
 
+const generateRandomString = function() {
+  let text = "";
+  const charSet = 'abcdefghijklmnopqrstuvwxyz';
+  for (i = 0; i < charSet.length; i++) {
+    text += charSet.charAt(Math.floor(Math.random() * charSet.length));
+  }
+  return text;
+};
+
 app.set('view engine', 'ejs');
 
 const urlDatabase = {
@@ -32,7 +41,7 @@ app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a rou
 app.post('/urls', (req, res) => {
   console.log(req.body);
   res.send('Ok');
-})
+});
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
