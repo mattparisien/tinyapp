@@ -10,7 +10,7 @@ const generateRandomString = function() {
   for (i = 0; i < charSet.length; i++) {
     text += charSet.charAt(Math.floor(Math.random() * charSet.length));
   }
-  return text.substr(0,6);
+  return text.substr(0,6).toUpperCase();
 };
 
 app.set('view engine', 'ejs');
