@@ -1,9 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended: true}));
 const app = express();
+app.use(bodyParser.urlencoded({extended: true}));
 const PORT = 8080;
-
 
 app.set('view engine', 'ejs');
 
@@ -29,6 +28,11 @@ app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a rou
   const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL]}
   res.render('urls_show', templateVars);
 });
+
+app.post('/urls', (req, res) => {
+  console.log(req.body);
+  res.send('Ok');
+})
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
