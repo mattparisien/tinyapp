@@ -39,8 +39,10 @@ app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a rou
 });
 
 app.post('/urls', (req, res) => {
-  console.log(req.body);
-  res.send('Ok');
+  urlDatabase['longURL'] = req.body.longURL;
+  urlDatabase['shortURL'] = generateRandomString();
+  console.log(urlDatabase)
+  res.redirect(`/urls/${urlDatabase['shortURL']}`);
 });
 
 app.listen(PORT, () => {
