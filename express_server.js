@@ -7,7 +7,7 @@ const PORT = 8080;
 const generateRandomString = function() {
   let text = "";
   const charSet = 'abcdefghijklmnopqrstuvwxyz';
-  for (i = 0; i < charSet.length; i++) {
+  for (let i = 0; i < charSet.length; i++) {
     text += charSet.charAt(Math.floor(Math.random() * charSet.length));
   }
   return text.substr(0,6).toUpperCase();
@@ -21,11 +21,11 @@ const urlDatabase = {
 };
 
 app.get('/', (req, res) => {
-  res.send('Welcome to the index page!')
+  res.send('Welcome to the index page!');
 });
 
 app.get('/urls', (req, res) => {
-  const templateVars = { urls: urlDatabase }; 
+  const templateVars = { urls: urlDatabase };
   res.render('urls_index', templateVars);
 });
 
@@ -34,14 +34,14 @@ app.get('/urls/new', (req, res) => {
 });
 
 app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a route parameter
-  const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL]}
+  const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL]};
   res.render('urls_show', templateVars);
 });
 
 app.post('/urls', (req, res) => {
   urlDatabase['longURL'] = req.body.longURL;
   urlDatabase['shortURL'] = generateRandomString();
-  console.log(urlDatabase)
+  console.log(urlDatabase);
   res.redirect(`/urls/${urlDatabase['shortURL']}`);
 });
 
@@ -54,7 +54,13 @@ app.post('/urls/:shortURL/delete', (req, res) => {
   const url = req.params.shortURL;
   delete urlDatabase[url];
   res.redirect('/urls');
-})
+});
+
+app.post('/urls/:id', (req, res) => {
+  const updatedURL = req.params.id;
+  urlDatabase.id = updatedURL;
+  res.redirect('/urls');
+});
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
