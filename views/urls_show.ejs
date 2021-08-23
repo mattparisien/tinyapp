@@ -17,9 +17,9 @@
       </div>
     <div class="card-footer text-muted">
       <h1>Edit</h1>
-      <form class="update_url_form" method="POST" action="update">
+      <form class="update_url_form" method="POST" action="<%=shortURL%>">
         <label>New URL: </label>
-        <input type="text">
+        <input type="text" name="longURL" placeholder="Long URL"> 
         <button class="btn btn-primary" type="submit">Update</button>
       </form>
     </div>
@@ -30,6 +30,7 @@
     .update_url_form *{
       margin: 20px;
     };
+
   </style>
 
   <!-- Bootstrap JS -->
