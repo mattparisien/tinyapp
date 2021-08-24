@@ -66,7 +66,7 @@ app.post('/login', (req, res) => {
   const userInput = req.body['username'];
   const username = res.cookie("username", userInput);
   res.redirect('/urls');
-})
+});
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
