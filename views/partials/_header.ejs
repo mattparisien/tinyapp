@@ -11,21 +11,57 @@
       </div>
     </div>
     <!-- Login form -->
-    <form method="POST" action="/login" style="display: flex; justify-content: space-between; width: 280px" >
+    <form class="login_form" method="POST" action="/login" style="display: flex; justify-content: space-between; width: 280px" >
       <input class="form-control" name="username" placeholder="Enter your username" style="width: 200px;">
       <button class="btn btn-secondary" type="submit" >Log In</button>
     </form>
-    <!-- Logout form -->
-    <form method="POST" action="/logout" style="display: none;">
-      <label type-="text">Log Out</label>
-      <button class="btn btn-secondary">Log Out</button>
+    <form class="logout_form" method="POST" action="/logout">
+    <label><%=username%></label>
+    <button class="logout_btn btn btn-secondary">Log Out</button>
     </form>
   </nav>
+
   <!-- Nav CTA Button Styles -->
   <style>
+    /* Hide logout form by default for users who aren't logged in */
+    .logout_form {
+      display: none;
+    }
     .btn-secondary {
       background-color: #294356;
       border: 0px;
     }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .in-view {
+      display: block;
+    }
   </style>
+
+
+<script>
+
+  function toggleNavForms() {
+    const logInForm = document.getElementsByClassName('login_form')[0];
+    const logOutForm = document.getElementsByClassName('logout_form')[0];
+    const cookies = document.cookie;
+
+    if (cookies.includes('username')) {
+      logInForm.classList.add('hidden');
+      logOutForm.classList.add('in-view');
+    } 
+    // const username = cookies.split(';')
+    // username.forEach((cookie) => {
+    //   if ()
+    // })
+    // console.log(username)
+  }
+  toggleNavForms()
+</script>
+
+
+
 </header>
