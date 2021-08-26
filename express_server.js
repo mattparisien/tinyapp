@@ -37,7 +37,7 @@ app.get('/urls', (req, res) => {
 
 
 app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a route parameter
-  const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], username: req.body['username']};
+  const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], username: req.cookies['username']};
   res.render('urls_show', templateVars);
 });
 
@@ -71,6 +71,10 @@ app.post('/login', (req, res) => {
   res.redirect('/urls');
 });
 
+app.post('/logout', (req, res) => {
+  res.clearCookie('username');
+  res.redirect('urls');
+})
 
 
 app.listen(PORT, () => {
