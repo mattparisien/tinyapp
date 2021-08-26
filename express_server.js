@@ -35,6 +35,11 @@ app.get('/urls', (req, res) => {
   res.render('urls_index', templateVars);
 });
 
+app.get("/urls/new", (req, res) => {
+  const templateVars = { username: req.cookies['username']};
+  res.render("urls_new", templateVars);
+});
+
 
 app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a route parameter
   const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], username: req.cookies['username']};
