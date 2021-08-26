@@ -1,8 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+
 const app = express();
-app.use(bodyParser.urlencoded({extended: true}));
 const PORT = 8080;
+
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
+
 
 const generateRandomString = function() {
   let text = "";
@@ -25,23 +31,20 @@ app.get('/', (req, res) => {
 });
 
 app.get('/urls', (req, res) => {
-  const templateVars = { urls: urlDatabase };
+  const templateVars = { urls: urlDatabase, username: req.cookies['username']};
   res.render('urls_index', templateVars);
 });
 
-app.get('/urls/new', (req, res) => {
-  res.render('urls_new');
-});
 
 app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a route parameter
-  const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL]};
+  const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], username: req.body['username']};
   res.render('urls_show', templateVars);
 });
+
 
 app.post('/urls', (req, res) => {
   urlDatabase['longURL'] = req.body.longURL;
   urlDatabase['shortURL'] = generateRandomString();
-  console.log(urlDatabase);
   res.redirect(`/urls/${urlDatabase['shortURL']}`);
 });
 
@@ -63,10 +66,12 @@ app.post('/urls/:id', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  const userInput = req.body['username'];
-  const username = res.cookie("username", userInput);
+  const username = req.body.username;
+  res.cookie('username', username)
   res.redirect('/urls');
 });
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
