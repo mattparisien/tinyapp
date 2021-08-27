@@ -12,7 +12,7 @@ app.use(cookieParser());
 
 const generateRandomString = function() {
   let text = "";
-  const charSet = 'abcdefghijklmnopqrstuvwxyz';
+  const charSet = 'abcdefghijklmnopqrstuvwxyz123456789';
   for (let i = 0; i < charSet.length; i++) {
     text += charSet.charAt(Math.floor(Math.random() * charSet.length));
   }
@@ -33,8 +33,8 @@ class User {
     this.id = id;
     this.email = email;
     this.password = password;
-  };
-};
+  }
+}
 
 app.get('/', (req, res) => {
   res.send('Welcome to the index page!');
@@ -52,13 +52,11 @@ app.get("/urls/new", (req, res) => {
   res.render("urls_new", templateVars);
 });
 
-
 app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a route parameter
   const currentUser = users[req.cookies['username']];
   const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], currentUser};
   res.render('urls_show', templateVars);
 });
-
 
 app.post('/urls', (req, res) => {
   urlDatabase['longURL'] = req.body.longURL;
@@ -85,17 +83,18 @@ app.post('/urls/:id', (req, res) => {
 
 app.post('/login', (req, res) => {
   const username = req.body.username;
-  res.cookie('username', username)
+  res.cookie('username', username);
   res.redirect('/urls');
 });
 
 app.post('/logout', (req, res) => {
+  const currentUser = users[req.cookies['username']];
   res.clearCookie('username');
   res.redirect('urls');
 });
 
 app.get('/register', (req, res) => {
-  res.render('registration.ejs')
+  res.render('registration.ejs');
 });
 
 app.post('/register', (req, res) => {
@@ -105,8 +104,7 @@ app.post('/register', (req, res) => {
   users[uniqueId] = new User(uniqueId, email, password);
   res.cookie('username', uniqueId);
   res.redirect('/urls');
-})
-
+});
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
