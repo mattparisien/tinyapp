@@ -26,6 +26,16 @@ const urlDatabase = {
   "9sm5xK": "http://www.google.com"
 };
 
+const users = new Object(); //Serves as user database
+
+class User {
+  constructor(id, name, password) {
+    this.id = id;
+    this.name = name;
+    this.password = password;
+  };
+};
+
 app.get('/', (req, res) => {
   res.send('Welcome to the index page!');
 });
@@ -83,8 +93,14 @@ app.post('/logout', (req, res) => {
 
 app.get('/register', (req, res) => {
   res.render('registration.ejs')
-})
+});
 
+app.post('/register', (req, res) => {
+  const uniqueId = generateRandomString();
+  users[uniqueId] = new User(uniqueId, "sample email", "sample password");
+  res.cookie('userid', uniqueId);
+  res.redirect('/urls');
+})
 
 
 app.listen(PORT, () => {
