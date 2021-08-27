@@ -79,7 +79,13 @@ app.post('/login', (req, res) => {
 app.post('/logout', (req, res) => {
   res.clearCookie('username');
   res.redirect('urls');
+});
+
+app.get('/register', (req, res) => {
+  res.render('registration.ejs')
 })
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
