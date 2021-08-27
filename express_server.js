@@ -29,9 +29,9 @@ const urlDatabase = {
 const users = new Object(); //Serves as user database
 
 class User {
-  constructor(id, name, password) {
+  constructor(id, email, password) {
     this.id = id;
-    this.name = name;
+    this.email = email;
     this.password = password;
   };
 };
@@ -41,18 +41,21 @@ app.get('/', (req, res) => {
 });
 
 app.get('/urls', (req, res) => {
-  const templateVars = { urls: urlDatabase, users};
+  const currentUser = users[req.cookies['username']]; // get current user's id
+  const templateVars = { urls: urlDatabase, currentUser};
   res.render('urls_index', templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
-  const templateVars = users;
+  const currentUser = users[req.cookies['username']];
+  const templateVars = { currentUser };
   res.render("urls_new", templateVars);
 });
 
 
 app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a route parameter
-  const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], users};
+  const currentUser = users[req.cookies['username']];
+  const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], currentUser};
   res.render('urls_show', templateVars);
 });
 
@@ -100,8 +103,7 @@ app.post('/register', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   users[uniqueId] = new User(uniqueId, email, password);
-  console.log(users)
-  res.cookie('userid', uniqueId);
+  res.cookie('username', uniqueId);
   res.redirect('/urls');
 })
 
