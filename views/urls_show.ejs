@@ -17,22 +17,37 @@
       </div>
     <div class="card-footer text-muted">
       <h1>Edit</h1>
-      <form class="update_url_form" method="POST" action="<%=shortURL%>">
+      <form class="form-inline justify-content-center" method="POST" action="<%=shortURL%>">
         <label>New URL: </label>
         <input type="text" name="longURL" placeholder="Long URL"> 
         <button class="btn btn-primary" type="submit">Update</button>
       </form>
     </div>
   </div>
-  
-  <!--Custom CSS Styles-->
+
   <style>
-    .update_url_form *{
-      margin: 20px;
-    };
+
+    .card-footer form {
+      font-family: 'Helvetica'
+   }
+    .card-footer form input {
+     margin: 0 20px;
+     padding: 0 0 0 10px;
+     border: 0px;
+     border-radius: 5px;
+     box-shadow: 0 0px 20px 0 rgb(0 0 0 / 20%);
+     line-height: 2.4;
+    }
+
+    .card-footer form button {
+      border: 0px !important;
+      outline: none !important;
+      box-shadow: 0 0px 20px 0 rgb(0 0 2 / 20%);
+    }
+
 
   </style>
-
+  
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
