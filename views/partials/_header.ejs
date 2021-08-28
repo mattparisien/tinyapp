@@ -17,7 +17,11 @@
       <button class="btn btn-secondary" type="submit" >Log In</button>
     </form>
     <form class="logout_form" method="POST" action="/logout">
-    <label><%=currentUser['email']%></label>
+    <label>
+      <% if (currentUser) { %>
+        <%=currentUser['email']%>
+      <% } %>
+    </label>
     <button class="logout_btn btn btn-secondary">Log Out</button>
     </form>
   </nav>
@@ -41,14 +45,14 @@
       display: block;
     }
   </style>
-
-<% if (currentUser['email']){ %> 
+  
+<!-- Toggle login/logout forms-->
+<% if (currentUser) { %> 
   <script> 
-    document.getElementsByClassName('login_form')[0].classList.add('hidden'); 
-    document.getElementsByClassName('logout_form')[0].classList.add('in-view'); 
+    document.getElementsByClassName('login_form')[0].remove(); 
+    document.getElementsByClassName('logout_form')[0].classList.add('in-view');
  </script>
-<%}%>
-
+<% } %>
 
 
 </header>
