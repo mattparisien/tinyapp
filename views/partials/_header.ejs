@@ -29,7 +29,7 @@
         <%=currentUser['email']%>
       <% } %>
     </label>
-    <button class="logout_btn btn btn-secondary">Log Out</button>
+    <button class="logout_btn btn btn-light">Log Out</button>
     </form>
   </nav>
 
@@ -39,6 +39,15 @@
     .logout_form {
       display: none;
     }
+
+    .register_form {
+      margin-left: 1em;
+    }
+
+  .logged_out_container{
+    display: flex;
+  }
+
     .btn-secondary {
       background-color: black;
       border: 0px;
