@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const { checkIfEmpty, fetchUserID } = require('./helper_funcs');
 
 const app = express();
 const PORT = 8080;
@@ -18,23 +19,6 @@ const generateRandomString = function() {
     text += charSet.charAt(Math.floor(Math.random() * charSet.length));
   }
   return text.substr(0,6).toUpperCase();
-};
-
-const checkIfEmpty = function(str) {
-  if (str.length !== 0) {
-    return false;
-  }
-  return true;
-};
-
-const fetchUserEmail = function(obj, email) {
-  console.log(obj)
-  for (key in obj) {
-    if (obj[key]['email'] === email) {
-      return key;
-    }
-  }
-  return undefined;
 };
 
 const urlDatabase = {
@@ -105,7 +89,7 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
   const email = req.body.email;
-  const id = fetchUserEmail(users, email);
+  const id = fetchUserID(users, email);
   res.cookie('user_id', id)
   res.redirect('/urls');
 });
@@ -130,7 +114,7 @@ app.post('/register', (req, res) => {
   
   if (checkIfEmpty(email) || checkIfEmpty(password)) {
     res.status(400).send('Please fill out the fields.')
-  } else if (fetchUserEmail(users, email) !== undefined) {
+  } else if (fetchUserID(users, email) !== undefined) {
     res.status(400).send('E-mail already exists.')
   }
 
