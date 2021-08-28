@@ -42,7 +42,12 @@ app.get('/', (req, res) => {
 
 app.get('/urls', (req, res) => {
   const currentUser = users[req.cookies['user_id']]; // get current user's id
-  const templateVars = { urls: urlDatabase, currentUser};
+  if (!currentUser) {
+    const templateVars = { error: ` to view your URL collection.`, currentUser: null }
+    res.status(400);
+    res.render('urls_index', templateVars);
+  }
+  const templateVars = { urls: urlDatabase, currentUser, error: null};
   res.render('urls_index', templateVars);
 });
 
