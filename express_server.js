@@ -22,8 +22,14 @@ const generateRandomString = function() {
 };
 
 const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+  "b2xVn2": {
+    longURL: "http://www.lighthouselabs.ca",
+    userID: "",
+  },
+  "9sm5xK": {
+    longURL: "http://www.google.com",
+    userID: ""
+  }
 };
 
 const users = new Object(); //Serves as user database
@@ -42,8 +48,9 @@ app.get('/', (req, res) => {
 
 app.get('/urls', (req, res) => {
   const currentUser = users[req.cookies['user_id']]; // get current user's id
+  console.log(urlDatabase)
   if (!currentUser) {
-    const templateVars = { error: ` to view your URL collection.`, currentUser: null }
+    const templateVars = { error: ` to view your URL collection`, currentUser: null }
     res.status(400);
     res.render('urls_index', templateVars);
   }
@@ -60,9 +67,11 @@ app.post('/urls', (req, res) => {
 app.get("/urls/new", (req, res) => {
   const currentUser = users[req.cookies['user_id']];
   const templateVars = { currentUser };
+
   if (!req.cookies['user_id']) {
     res.redirect('/login')
   }
+
   res.render("urls_new", templateVars);
 });
 
