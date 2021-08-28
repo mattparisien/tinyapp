@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const { checkIfEmpty, fetchUserID } = require('./helper_funcs');
+const { checkIfEmpty, fetchUserID, fetchPassword } = require('./helper_funcs');
 
 const app = express();
 const PORT = 8080;
@@ -89,10 +89,13 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
   const email = req.body.email;
+  const password = req.body.password;
   const id = fetchUserID(users, email);
   
-  if (id === undefined) {
+  if (!id) {
     res.status(400).send('E-mail is not registered.')
+  } else if (!fetchPassword(users, password)) {
+    res.status(400).send('Invalid password.')
   };
   
   res.cookie('user_id', id)
