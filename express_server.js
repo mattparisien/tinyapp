@@ -46,6 +46,12 @@ app.get('/urls', (req, res) => {
   res.render('urls_index', templateVars);
 });
 
+app.post('/urls', (req, res) => {
+  urlDatabase['longURL'] = req.body.longURL;
+  urlDatabase['shortURL'] = generateRandomString();
+  res.redirect(`/urls/${urlDatabase['shortURL']}`);
+});
+
 app.get("/urls/new", (req, res) => {
   const currentUser = users[req.cookies['user_id']];
   const templateVars = { currentUser };
@@ -56,12 +62,6 @@ app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a rou
   const currentUser = users[req.cookies['user_id']];
   const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], currentUser};
   res.render('urls_show', templateVars);
-});
-
-app.post('/urls', (req, res) => {
-  urlDatabase['longURL'] = req.body.longURL;
-  urlDatabase['shortURL'] = generateRandomString();
-  res.redirect(`/urls/${urlDatabase['shortURL']}`);
 });
 
 app.get("/u/:shortURL", (req, res) => {
@@ -90,6 +90,11 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   const email = req.body.email;
   const id = fetchUserID(users, email);
+  
+  if (id === undefined) {
+    res.status(400).send('E-mail is not registered.')
+  };
+  
   res.cookie('user_id', id)
   res.redirect('/urls');
 });
