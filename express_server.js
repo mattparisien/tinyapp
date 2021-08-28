@@ -82,6 +82,7 @@ app.post('/urls/:id', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
+  console.log(urlDatabase)
   const username = req.body.username;
   res.cookie('username', username);
   res.redirect('/urls');
