@@ -98,7 +98,9 @@ app.post('/urls/:id', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  res.render('login');
+  const currentUser = users[req.cookies['user_id']];
+  const templateVars = { currentUser };
+  res.render('login',templateVars);
 });
 
 app.post('/login', (req, res) => {
@@ -116,7 +118,6 @@ app.post('/logout', (req, res) => {
 
 app.get('/register', (req, res) => {
   const currentUser = users[req.cookies['user_id']];
-  console.log(currentUser)
   const templateVars = { currentUser };
   res.render('registration', templateVars);
 });
