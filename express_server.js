@@ -26,14 +26,16 @@ const checkIfEmpty = function(str) {
   return true;
 };
 
-const checkUserPresence = function(obj, email) {
+const fetchUserEmail = function(obj, email) {
+  console.log(obj)
   for (key in obj) {
     if (obj[key]['email'] === email) {
-      return true;
+      return key;
     }
   }
-  return false;
+  return undefined;
 };
+
 
 app.set('view engine', 'ejs');
 
@@ -98,13 +100,13 @@ app.post('/urls/:id', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  res.render('login')
+  res.render('login');
 })
 
 app.post('/login', (req, res) => {
-  console.log(urlDatabase)
-  const username = req.body.username;
-  res.cookie('username', username);
+  const email = req.body.email;
+  const id = fetchUserEmail(users, email);
+  res.cookie('user_id', id)
   res.redirect('/urls');
 });
 
@@ -125,7 +127,7 @@ app.post('/register', (req, res) => {
   
   if (checkIfEmpty(email) || checkIfEmpty(password)) {
     res.status(400).send('Please fill out the fields.')
-  } else if (checkUserPresence(users, email)) {
+  } else if (fetchUserEmail(users, email) !== undefined) {
     res.status(400).send('E-mail already exists.')
   }
 
