@@ -9,7 +9,6 @@ const checkIfEmpty = function(str) {
 
 
 const fetchUserID = function(obj, email) {
-  console.log(obj)
   for (key in obj) {
     if (obj[key]['email'] === email) {
       return key;
@@ -18,4 +17,13 @@ const fetchUserID = function(obj, email) {
   return undefined;
 };
 
-module.exports = { checkIfEmpty, fetchUserID }
+const fetchPassword = function(obj, password) {
+  for (key in obj) {
+    if (obj[key]['password'] === password) {
+      return password;
+    }
+  }
+  return undefined;
+};
+
+module.exports = { checkIfEmpty, fetchUserID, fetchPassword }
