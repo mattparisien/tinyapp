@@ -25,9 +25,9 @@
     
     <div class="logged_in_container">
       <form class="logout_form" method="POST" action="/logout">
-        <label>
+        <label style="margin-right: 1em">
           <% if (currentUser) { %>
-            <%=currentUser['email']%>
+            Logged In As: <%=currentUser['email']%>
           <% } %>
         </label>
         <button class="logout_btn btn btn-light">Log Out</button>
