@@ -59,19 +59,19 @@ app.get('/', (req, res) => {
 });
 
 app.get('/urls', (req, res) => {
-  const currentUser = users[req.cookies['username']]; // get current user's id
+  const currentUser = users[req.cookies['user_id']]; // get current user's id
   const templateVars = { urls: urlDatabase, currentUser};
   res.render('urls_index', templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
-  const currentUser = users[req.cookies['username']];
+  const currentUser = users[req.cookies['user_id']];
   const templateVars = { currentUser };
   res.render("urls_new", templateVars);
 });
 
 app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a route parameter
-  const currentUser = users[req.cookies['username']];
+  const currentUser = users[req.cookies['user_id']];
   const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], currentUser};
   res.render('urls_show', templateVars);
 });
@@ -111,8 +111,8 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/logout', (req, res) => {
-  const currentUser = users[req.cookies['username']];
-  res.clearCookie('username');
+  const currentUser = users[req.cookies['user_id']];
+  res.clearCookie('user_id');
   res.redirect('urls');
 });
 
@@ -132,7 +132,7 @@ app.post('/register', (req, res) => {
   }
 
   users[uniqueId] = new User(uniqueId, email, password);
-  res.cookie('username', uniqueId);
+  res.cookie('user_id', uniqueId);
   res.redirect('/urls');
 });
 
