@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const { checkIfEmpty, fetchUserID, fetchPassword } = require('./helper_funcs');
+const { checkIfEmpty, fetchUserID, fetchPassword, urlsForUser } = require('./helper_funcs');
 
 const app = express();
 const PORT = 8080;
@@ -21,18 +21,8 @@ const generateRandomString = function() {
   return text.substr(0,6).toUpperCase();
 };
 
-const urlDatabase = {
-  "b2xVn2": {
-    longURL: "http://www.lighthouselabs.ca",
-    userID: "",
-  },
-  "9sm5xK": {
-    longURL: "http://www.google.com",
-    userID: ""
-  }
-};
-
-const users = new Object(); //Serves as user database
+const urlDatabase = {}; //Serves as URL database
+const users = {} ; //Serves as user database
 
 class User {
   constructor(id, email, password) {
@@ -48,12 +38,17 @@ app.get('/', (req, res) => {
 
 app.get('/urls', (req, res) => {
   const currentUser = users[req.cookies['user_id']]; // get current user's id
+  const cookieID = req.cookies['user_id']
+
   if (!currentUser) {
-    const templateVars = { error: ` to view your URL collection`, currentUser: null }
     res.status(400);
+    const templateVars = { error: ` to view your URL collection`, currentUser: null }
     res.render('urls_index', templateVars);
-  }
-  const templateVars = { urls: urlDatabase, currentUser, error: null};
+  };
+  
+  console.log(urlDatabase)
+  const urls = urlsForUser(urlDatabase, cookieID)
+  const templateVars = { urls, currentUser, error: null};
   res.render('urls_index', templateVars);
 });
 
@@ -63,7 +58,6 @@ app.post('/urls', (req, res) => {
     longURL: req.body.longURL,  // set value to longURL
     userID: req.cookies['user_id'] //identify active user and attribute to shortURLs
   }
-  console.log(urlDatabase)
   res.redirect(`/urls/${urlDatabase['shortURL']}`);
 });
 
@@ -80,7 +74,10 @@ app.get("/urls/new", (req, res) => {
 
 app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a route parameter
   const currentUser = users[req.cookies['user_id']];
-  const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], currentUser};
+  const cookieID = req.cookies['user_id']
+
+  const urls = urlsForUser(urlDatabase, cookieID)
+  const templateVars = {urls, currentUser};
   res.render('urls_show', templateVars);
 });
 
@@ -90,7 +87,9 @@ app.get("/u/:shortURL", (req, res) => {
 });
 
 app.post('/urls/:shortURL/delete', (req, res) => {
+  console.log(req.params)
   const url = req.params.shortURL;
+  console.log(url)
   delete urlDatabase[url];
   res.redirect('/urls');
 });

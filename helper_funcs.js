@@ -26,4 +26,23 @@ const fetchPassword = function(obj, password) {
   return undefined;
 };
 
-module.exports = { checkIfEmpty, fetchUserID, fetchPassword }
+//Returns URLS specific to the user logged in
+const urlsForUser = function(obj, cookieID) {
+  const userURLS = [];
+
+  for (shortURL in obj) {
+    if (obj[shortURL]['userID'] === cookieID) {
+      const links = { longLink: obj[shortURL]['longURL'], shortLink: shortURL }
+      userURLS.push(links)
+    }
+  }
+  return userURLS;
+}
+
+
+module.exports = { 
+  checkIfEmpty, 
+  fetchUserID, 
+  fetchPassword,
+  urlsForUser
+  }
