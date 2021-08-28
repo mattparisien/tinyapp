@@ -48,7 +48,6 @@ app.get('/', (req, res) => {
 
 app.get('/urls', (req, res) => {
   const currentUser = users[req.cookies['user_id']]; // get current user's id
-  console.log(urlDatabase)
   if (!currentUser) {
     const templateVars = { error: ` to view your URL collection`, currentUser: null }
     res.status(400);
@@ -59,8 +58,12 @@ app.get('/urls', (req, res) => {
 });
 
 app.post('/urls', (req, res) => {
-  urlDatabase['longURL'] = req.body.longURL;
-  urlDatabase['shortURL'] = generateRandomString();
+  const shortURL = generateRandomString();
+  urlDatabase[shortURL] = { // Set a key equal to shortURL an open an object value
+    longURL: req.body.longURL,  // set value to longURL
+    userID: req.cookies['user_id'] //identify active user and attribute to shortURLs
+  }
+  console.log(urlDatabase)
   res.redirect(`/urls/${urlDatabase['shortURL']}`);
 });
 
