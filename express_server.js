@@ -19,6 +19,13 @@ const generateRandomString = function() {
   return text.substr(0,6).toUpperCase();
 };
 
+const checkIfEmpty = function(str) {
+  if (str.length !== 0) {
+    return false;
+  }
+  return true;
+};
+
 app.set('view engine', 'ejs');
 
 const urlDatabase = {
@@ -102,6 +109,11 @@ app.post('/register', (req, res) => {
   const uniqueId = generateRandomString();
   const email = req.body.email;
   const password = req.body.password;
+  
+  if (checkIfEmpty(email) || checkIfEmpty(password)) {
+    res.status(400).send('The server responded with a status code of 400.')
+  }
+
   users[uniqueId] = new User(uniqueId, email, password);
   res.cookie('username', uniqueId);
   res.redirect('/urls');
