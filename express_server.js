@@ -9,6 +9,7 @@ const PORT = 8080;
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
+app.set('view engine', 'ejs');
 
 const generateRandomString = function() {
   let text = "";
@@ -35,9 +36,6 @@ const fetchUserEmail = function(obj, email) {
   }
   return undefined;
 };
-
-
-app.set('view engine', 'ejs');
 
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
@@ -101,7 +99,7 @@ app.post('/urls/:id', (req, res) => {
 
 app.get('/login', (req, res) => {
   res.render('login');
-})
+});
 
 app.post('/login', (req, res) => {
   const email = req.body.email;
@@ -117,10 +115,14 @@ app.post('/logout', (req, res) => {
 });
 
 app.get('/register', (req, res) => {
-  res.render('registration.ejs');
+  const currentUser = users[req.cookies['user_id']];
+  console.log(currentUser)
+  const templateVars = { currentUser };
+  res.render('registration', templateVars);
 });
 
 app.post('/register', (req, res) => {
+  
   const uniqueId = generateRandomString();
   const email = req.body.email;
   const password = req.body.password;
