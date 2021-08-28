@@ -97,6 +97,10 @@ app.post('/urls/:id', (req, res) => {
   res.redirect('/urls');
 });
 
+app.get('/login', (req, res) => {
+  res.render('login')
+})
+
 app.post('/login', (req, res) => {
   console.log(urlDatabase)
   const username = req.body.username;
@@ -124,6 +128,7 @@ app.post('/register', (req, res) => {
   } else if (checkUserPresence(users, email)) {
     res.status(400).send('E-mail already exists.')
   }
+
   users[uniqueId] = new User(uniqueId, email, password);
   res.cookie('username', uniqueId);
   res.redirect('/urls');
