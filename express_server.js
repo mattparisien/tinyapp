@@ -26,6 +26,15 @@ const checkIfEmpty = function(str) {
   return true;
 };
 
+const checkUserPresence = function(obj, email) {
+  for (key in obj) {
+    if (obj[key]['email'] === email) {
+      return true;
+    }
+  }
+  return false;
+};
+
 app.set('view engine', 'ejs');
 
 const urlDatabase = {
@@ -111,9 +120,10 @@ app.post('/register', (req, res) => {
   const password = req.body.password;
   
   if (checkIfEmpty(email) || checkIfEmpty(password)) {
-    res.status(400).send('The server responded with a status code of 400.')
+    res.status(400).send('Please fill out the fields.')
+  } else if (checkUserPresence(users, email)) {
+    res.status(400).send('E-mail already exists.')
   }
-
   users[uniqueId] = new User(uniqueId, email, password);
   res.cookie('username', uniqueId);
   res.redirect('/urls');
