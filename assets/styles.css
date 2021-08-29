@@ -12,6 +12,19 @@ html, body {
   font-weight: 400;
 }
 
+body a {
+  color: var(--mainColor);
+}
+
+body a:hover {
+  color: var(--deepGreen);
+  text-decoration: underline;
+}
+
+h5 {
+  font-weight: 400;
+}
+
 /* Navbar */
 
 nav {
@@ -41,15 +54,21 @@ body {
   background-color: var(--creamColor);
 }
 
-.content {
-  background-color: white;
-}
-
 
 /* Log In / Log Out Form Styles */
 :root, body, main {
   height: 100%;
 }
+
+.form-logo {
+  font-family: 'Oleo Script';
+  margin-bottom: 60px;
+}
+
+.content input::placeholder {
+  font-size: 14px;
+}
+
 
 .user-sign-in {
   /* background: linear-gradient(to bottom, var(--mainColor), var(--creamColor)); */
@@ -61,11 +80,13 @@ body {
   border-radius: 10px;
   box-shadow: 0 1.5vw 3vw rgb(0 0 0 / 20%);
   height: 500px;
-  width: 450px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  background-color: white;
+  max-width: fit-content;
+  margin: 100px;
 }
 
 
