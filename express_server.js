@@ -6,6 +6,8 @@ const { checkIfEmpty, fetchUserID, fetchPassword, urlsForUser } = require('./hel
 const app = express();
 const PORT = 8080;
 
+//Reference directory from which serving static css file
+app.use(express.static(__dirname + '/assets')); 
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
@@ -53,12 +55,10 @@ app.get('/urls', (req, res) => {
 
 app.post('/urls', (req, res) => {
   const shortURL = generateRandomString();
-  console.log("shortURL:" , shortURL)
   urlDatabase[shortURL] = { // Set a key equal to shortURL an open an object value
     longURL: req.body.longURL,  // set value to longURL
     userID: req.cookies['user_id'] //identify active user and attribute to shortURLs
   }
-  console.log('database: ', urlDatabase)
   res.redirect(`/urls/${shortURL}`);
 });
 
@@ -84,15 +84,15 @@ app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a rou
 });
 
 app.get("/u/:shortURL", (req, res) => {
-  const longURL = urlDatabase['longURL'];
+  const shortURL = req.params.shortURL;
+  const longURL = urlDatabase[shortURL]['longURL'];
   res.redirect(longURL);
 });
 
 app.post('/urls/:shortURL/delete', (req, res) => {
-  console.log(req.params)
   const url = req.params.shortURL;
-  console.log(url)
   delete urlDatabase[url];
+  console.log(urlDatabase)
   res.redirect('/urls');
 });
 
