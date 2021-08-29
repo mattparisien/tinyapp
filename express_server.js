@@ -104,7 +104,7 @@ app.post('/urls/:id', (req, res) => {
 
 app.get('/login', (req, res) => {
   const currentUser = users[req.cookies['user_id']];
-  const templateVars = { currentUser };
+  const templateVars = { currentUser, errorMsg: null };
   res.render('login',templateVars);
 });
 
@@ -112,11 +112,24 @@ app.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const id = fetchUserID(users, email);
-  
-  if (!id) {
-    res.status(400).send('E-mail is not registered.')
+  let msg = "";
+
+  if (checkIfEmpty(email) || checkIfEmpty(password)) {
+    res.status(400) 
+    msg = "Please fill out the fields."
+    const templateVars = { errorMsg: msg } ;
+    res.render('login', templateVars);
+
+  } else if (!id) {
+    res.status(400);
+    msg = "Email is not registered."
+    const templateVars = { errorMsg: msg } 
+    res.render('login', templateVars);
   } else if (!fetchPassword(users, password)) {
-    res.status(400).send('Invalid password.')
+    res.status(400);
+    msg = "Incorrect password.";
+    const templateVars = { errorMsg: msg };
+    res.render('login', templateVars)
   };
   
   res.cookie('user_id', id)
@@ -131,7 +144,7 @@ app.post('/logout', (req, res) => {
 
 app.get('/register', (req, res) => {
   const currentUser = users[req.cookies['user_id']];
-  const templateVars = { currentUser };
+  const templateVars = { currentUser, errorMsg: null };
   res.render('registration', templateVars);
 });
 
@@ -144,9 +157,11 @@ app.post('/register', (req, res) => {
   if (checkIfEmpty(email) || checkIfEmpty(password)) {
     res.status(400).send('Please fill out the fields.')
   } else if (fetchUserID(users, email) !== undefined) {
-    res.status(400).send('E-mail already exists.')
+    res.status(400);
+    const msg = "You already have an account with this email address."
+    const templateVars = { errorMsg: msg } 
+    res.render('registration', templateVars)
   }
-
   users[uniqueId] = new User(uniqueId, email, password);
   res.cookie('user_id', uniqueId);
   res.redirect('/urls');
