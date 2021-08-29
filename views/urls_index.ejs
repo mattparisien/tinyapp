@@ -6,6 +6,8 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
   <title>TinyApp</title>
 </head>
 <body>
@@ -34,12 +36,12 @@
             <td><%=obj['shortLink']%></td>
             <td><%=obj['longLink']%></td>
             <td>
-              <form method="GET" action="urls/<%=urls['shortLink']%>">
+              <form method="GET" action="urls/<%=obj['shortLink']%>">
                 <button class="btn btn-primary" type="submit" value="edit">Edit</button>
               </form>
             </td>
             <td>
-              <form method="POST" action="urls/<%=urls['shortLink']%>/delete">
+              <form method="POST" action="<%=shortU%>/delete">
                <button class="btn btn-danger" type="submit" value="delete">Delete</button>
               </form>
             </td>

@@ -3,6 +3,8 @@
 <head>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
   <title>URL - TinyApp Example</title>
 </head>
 
@@ -12,12 +14,12 @@
   <div class="card text-center">
       <div class="card-header"></div>
       <div class="card-body">
-        <h5 class="card-title">TinyURL for: <%=urls['longLink']%></h5>
-        <p class="card-text">Short URL: <a href="/u/<%=urls['longLink']%>"><%= urls['shortLink']%></a></p>
+        <h5 class="card-title">TinyURL for: <%=longURL%></h5>
+        <p class="card-text">Short URL: <a href="/u/<%=longURL%>"><%=shortURL%></a></p>
       </div>
     <div class="card-footer text-muted">
       <h1>Edit</h1>
-      <form class="form-inline justify-content-center" method="POST" action="<%=urls['shortLink']%>">
+      <form class="form-inline justify-content-center" method="POST" action="<%=shortURL%>">
         <label>New URL: </label>
         <input type="text" name="longURL" placeholder="Long URL"> 
         <button class="btn btn-primary" type="submit">Update</button>
