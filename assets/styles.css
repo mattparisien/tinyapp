@@ -48,11 +48,22 @@ nav .btn-secondary {
   box-shadow: 0 5px 15px 0 rgb(0 0 0 / 20%);
 }
 
-/* Log In / Log Out Body */
-
 body {
   background-color: var(--creamColor);
 }
+
+
+/* Log In / Log Out Body */
+
+.user-register, .user-sign-in {
+  background-image: url(bg-user-sign-in-01.svg) !important;
+  background-repeat: no-repeat;
+  background-size: 120%;
+  background-position: right;
+  overflow: hidden;
+}
+
+
 
 
 /* Log In / Log Out Form Styles */
