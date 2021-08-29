@@ -1,0 +1,26 @@
+/* Log In / Log Out Form Styles */
+:root, body, main {
+  height: 100%;
+}
+
+.content {
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 0 1.5vw 3vw rgb(0 0 0 / 20%);
+}
+
+.content form label {
+  margin-bottom: 0;
+}
+
+.content form input, .content form .btn {
+  width: 300px
+}
+
+
+.centered { 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
