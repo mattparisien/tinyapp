@@ -46,19 +46,20 @@ app.get('/urls', (req, res) => {
     res.render('urls_index', templateVars);
   };
   
-  console.log(urlDatabase)
-  const urls = urlsForUser(urlDatabase, cookieID)
+  const urls = urlsForUser(urlDatabase, cookieID);
   const templateVars = { urls, currentUser, error: null};
   res.render('urls_index', templateVars);
 });
 
 app.post('/urls', (req, res) => {
   const shortURL = generateRandomString();
+  console.log("shortURL:" , shortURL)
   urlDatabase[shortURL] = { // Set a key equal to shortURL an open an object value
     longURL: req.body.longURL,  // set value to longURL
     userID: req.cookies['user_id'] //identify active user and attribute to shortURLs
   }
-  res.redirect(`/urls/${urlDatabase['shortURL']}`);
+  console.log('database: ', urlDatabase)
+  res.redirect(`/urls/${shortURL}`);
 });
 
 app.get("/urls/new", (req, res) => {
@@ -74,10 +75,11 @@ app.get("/urls/new", (req, res) => {
 
 app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a route parameter
   const currentUser = users[req.cookies['user_id']];
-  const cookieID = req.cookies['user_id']
+  const currentShortURL = req.params.shortURL;
+  console.log("current short URL: ", currentShortURL)
+  console.log(urlDatabase)
 
-  const urls = urlsForUser(urlDatabase, cookieID)
-  const templateVars = {urls, currentUser};
+  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[currentShortURL]['longURL'], currentUser};
   res.render('urls_show', templateVars);
 });
 
