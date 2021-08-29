@@ -18,15 +18,14 @@ const fetchUserID = function(obj, email) {
 };
 
 const fetchPassword = function(obj, password) {
-  for (key in obj) {
-    if (obj[key]['password'] === password) {
-      return password;
-    }
-  }
-  return undefined;
+  const filtered = Object.keys(obj)
+  .filter(val => obj[val]['password'] === password);
+  return obj[filtered]['password'];
 };
 
-//Returns URLS specific to the user logged in
+
+//Returns URLS specific to the client
+
 const urlsForUser = function(obj, cookieID) {
   const userURLS = [];
 
@@ -45,4 +44,4 @@ module.exports = {
   fetchUserID, 
   fetchPassword,
   urlsForUser
-  }
+}
