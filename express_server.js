@@ -153,7 +153,7 @@ app.post('/login', (req, res) => {
 
 app.post('/logout', (req, res) => {
   const currentUser = users[req.session.user_id];
-  res.clearCookie('user_id');
+  res.clearCookie('session');
   res.redirect('urls');
 });
 
