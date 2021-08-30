@@ -1,12 +1,5 @@
 // Helper Functions
 
-const checkIfEmpty = function(str) {
-  if (str.length !== 0) {
-    return false;
-  }
-  return true;
-};
-
 
 const fetchUserID = function(obj, email) {
   for (key in obj) {
@@ -22,6 +15,7 @@ const fetchPassword = function(obj, password) {
   .filter(val => obj[val]['password'] === password);
   return obj[filtered]['password'];
 };
+
 
 
 //Returns URLS specific to the client
@@ -40,7 +34,6 @@ const urlsForUser = function(obj, cookieID) {
 
 
 module.exports = { 
-  checkIfEmpty, 
   fetchUserID, 
   fetchPassword,
   urlsForUser
