@@ -7,7 +7,7 @@ app.listen(PORT, () => {
 
 //Require dependencies
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const bcrypt = require('bcryptjs');
 
 //Require modularized code
