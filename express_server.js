@@ -16,6 +16,8 @@ const { fetchUserByEmail,
         urlsForUser,
       } = require('./helpers');
 
+const { validateLogIn } = require('./validateForms');
+
 
 
 //Reference directory from which serving static css file
@@ -61,7 +63,10 @@ app.get('/urls', (req, res) => {
 
   if (!currentUser) {
     res.redirect('/login')
-  };
+  } else if (urlsForUser(urlDatabase, cookieID).length === 0) {
+    const templateVars = { currentUser, error: `You have no tiny URLs.`};
+    res.render('urls_index', templateVars);
+  }
   
   const urls = urlsForUser(urlDatabase, cookieID);
   const templateVars = { urls, currentUser, error: null};
@@ -124,30 +129,10 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  const id = fetchUserByEmail(users, email);
 
-  console.log("id: ", id)
-
-  //If fields are empty, send error
-  if (!req.body.email || !req.body.password) {
-    res.status(400) 
-    const templateVars = { validationError: "Please fill out the fields." } ;
-    res.render('login', templateVars);
-
-    //If no user ID exists, send error
-  } else if (!id) {
-    res.status(400);
-    const templateVars = { validationError: "Email is not registered." } 
-    res.render('login', templateVars);
-
-  //If unhashed, req.body password does not match hashed database password, send error
-  } else if (!bcrypt.compareSync(password, fetchPassword(users, id))) {
-    res.status(400);
-    const templateVars = { validationError: "Incorrect password." };
-    res.render('login', templateVars)
-  };
+  validateLogIn(users, email, password, req, res);
   
-  req.session.user_id = id;
+  req.session.user_id = fetchUserByEmail(users, email)['id'];
   res.redirect('/urls');
 });
 
@@ -185,6 +170,7 @@ app.post('/register', (req, res) => {
   //Else - register user
   users[uniqueId] = new User(uniqueId, email, hashedPassword);
   req.session.user_id = uniqueId;
+  console.log(users)
   res.redirect('/urls');
 });
 
