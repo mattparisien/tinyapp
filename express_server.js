@@ -13,6 +13,7 @@ const bcrypt = require('bcryptjs');
 //Require modularized code
 const { fetchUserByEmail,
         urlsForUser,
+        generateRandomString
       } = require('./helpers');
 
 const { validateLogIn, validateRegister } = require('./validateForms');
@@ -21,25 +22,16 @@ const { validateLogIn, validateRegister } = require('./validateForms');
 
 //Reference directory from which serving static css file
 app.use(express.static(__dirname + '/assets')); 
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieSession({
   name: 'session',
-  keys: ['newest key', 'oldest key'],
+  keys: ['newesahrdahusdnolsnask'],
 
   // Cookie Options
 }))
 
 app.set('view engine', 'ejs');
 
-const generateRandomString = function() {
-  let text = "";
-  const charSet = 'abcdefghijklmnopqrstuvwxyz123456789';
-  for (let i = 0; i < charSet.length; i++) {
-    text += charSet.charAt(Math.floor(Math.random() * charSet.length));
-  }
-  return text.substr(0,6).toUpperCase();
-};
 
 const urlDatabase = {}; //Serves as URL database
 const users = {} ; //Serves as user database
@@ -130,7 +122,8 @@ app.post('/login', (req, res) => {
   const password = req.body.password;
 
   validateLogIn(users, email, password, req, res, bcrypt);
-  
+
+  //If log info is validated - continue
   req.session.user_id = fetchUserByEmail(users, email)['id'];
   res.redirect('/urls');
 });
@@ -156,19 +149,7 @@ app.post('/register', (req, res) => {
 
   validateRegister(users, email, req, res);
 
-  // //If fields are empty, send error
-  // if (!req.body.email || !req.body.password) {
-  //   res.status(400);
-  //   const templateVars = { validationError: "Please fill out the fields." } 
-
-  // //If user already exists, send error
-  // } else if (fetchUserByEmail(users, email) !== undefined) {
-  //   res.status(400);
-  //   const templateVars = { validationError: "You already have an account with this email address." } 
-  //   res.render('registration', templateVars)
-  // }
-
-  //Else - register user
+  //If info is validated - continue
   users[uniqueId] = new User(uniqueId, email, hashedPassword);
   req.session.user_id = uniqueId;
   console.log(users)

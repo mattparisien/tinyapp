@@ -1,5 +1,12 @@
 // Helper Functions
-
+const generateRandomString = function() {
+  let text = "";
+  const charSet = 'abcdefghijklmnopqrstuvwxyz123456789';
+  for (let i = 0; i < charSet.length; i++) {
+    text += charSet.charAt(Math.floor(Math.random() * charSet.length));
+  }
+  return text.substr(0,6).toUpperCase();
+};
 
 const fetchUserByEmail = function(obj, email) {
   for (key in obj) {
@@ -36,6 +43,7 @@ const urlsForUser = function(obj, cookieID) {
 
 
 module.exports = { 
+  generateRandomString,
   fetchUserByEmail, 
   fetchPassword,
   urlsForUser
