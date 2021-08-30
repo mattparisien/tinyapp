@@ -14,7 +14,7 @@ const bcrypt = require('bcryptjs');
 const { fetchUserByEmail,
         fetchPassword, 
         urlsForUser,
-      } = require('./helper_funcs');
+      } = require('./helpers');
 
 
 
@@ -60,9 +60,7 @@ app.get('/urls', (req, res) => {
   const currentUser = users[cookieID]; // get current user's id
 
   if (!currentUser) {
-    res.status(400);
-    const templateVars = { error: ` to view your URL collection`, currentUser: null }
-    res.render('urls_index', templateVars);
+    res.redirect('/login')
   };
   
   const urls = urlsForUser(urlDatabase, cookieID);
@@ -128,6 +126,8 @@ app.post('/login', (req, res) => {
   const password = req.body.password;
   const id = fetchUserByEmail(users, email);
 
+  console.log("id: ", id)
+
   //If fields are empty, send error
   if (!req.body.email || !req.body.password) {
     res.status(400) 
@@ -147,7 +147,7 @@ app.post('/login', (req, res) => {
     res.render('login', templateVars)
   };
   
-  res.cookie('user_id', id)
+  req.session.user_id = id;
   res.redirect('/urls');
 });
 
@@ -184,9 +184,7 @@ app.post('/register', (req, res) => {
 
   //Else - register user
   users[uniqueId] = new User(uniqueId, email, hashedPassword);
-  // res.cookie('user_id', uniqueId);
-  const test = req.session.user_id = uniqueId;
-  console.log(test)
+  req.session.user_id = uniqueId;
   res.redirect('/urls');
 });
 
