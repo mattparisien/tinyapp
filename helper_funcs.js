@@ -10,10 +10,14 @@ const fetchUserID = function(obj, email) {
   return undefined;
 };
 
-const fetchPassword = function(obj, password) {
-  const filtered = Object.keys(obj)
-  .filter(val => obj[val]['password'] === password);
-  return obj[filtered]['password'];
+// const fetchPassword = function(obj, id) {
+//   const filtered = Object.keys(obj)
+//   .filter(val => obj[val]['password'] === password);
+//   return obj[filtered]['password'];
+// };
+
+const fetchPassword = function(obj, id) {
+  return obj[id]['password'];
 };
 
 
