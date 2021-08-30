@@ -1,5 +1,5 @@
 const { assert, expect } = require('chai');
-const { fetchUserByEmail } = require('../helpers');
+const { fetchUserByEmail, fetchPassword } = require('../helpers');
 
 const testUsers = {
   "userRandomID": {
@@ -24,5 +24,14 @@ describe('getUserByEmail', function() {
   it ('should return undefined if the user provides an invalid email', () => {
     const user = fetchUserByEmail(testUsers, "randomemail@gmail.com")
     expect(user).to.be.undefined;
-  })
+  });
+
 });
+
+describe('fetchPassword', () => {
+  it ('should return the correct password when given a valid object & id', () => {
+    const password = fetchPassword(testUsers, 'userRandomID');
+    const expectedOutput = "purple-monkey-dinosaur";
+    assert.equal(password, expectedOutput);
+  })
+})
