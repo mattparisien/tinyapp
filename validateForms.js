@@ -1,6 +1,8 @@
+// Contains functions which validate user log in & user registration
+
 const { fetchUserByEmail, fetchPassword } = require('./helpers');
 
-const validateLogIn = function(object, email, password, req, res) {
+const validateLogIn = function(object, email, password, req, res, bcrypt) {
   if (!req.body.email || !req.body.password) {
     res.status(400) 
     const templateVars = { validationError: "Please fill out the fields." } ;
@@ -20,4 +22,18 @@ const validateLogIn = function(object, email, password, req, res) {
   };
 };
 
-module.exports = { validateLogIn };
+const validateRegister = function(object, email, req, res) {
+//If fields are empty, send error
+if (!req.body.email || !req.body.password) {
+  res.status(400);
+  const templateVars = { validationError: "Please fill out the fields." } 
+
+//If user already exists, send error
+} else if (fetchUserByEmail(object, email) !== undefined) {
+    res.status(400);
+    const templateVars = { validationError: "You already have an account with this email address." } 
+    res.render('registration', templateVars)
+  }
+}
+
+module.exports = { validateLogIn, validateRegister };
