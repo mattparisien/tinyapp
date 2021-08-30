@@ -19,8 +19,8 @@
           <div class="form-group mb-2 centered">
             <input class="form-control" type="email" name="email" placeholder="E-mail" style="width: 300px; margin: 1em 0">
             <input class="form-control" type="password" name="password" placeholder="Password" style="width: 300px; margin: 1em 0">
-            <% if (errorMsg) { %>
-              <p class="custom-validation-error"><%=errorMsg%></p>
+            <% if (validationError) { %>
+              <p class="custom-validation-error"><%=validationError%></p>
             <% } %>
             <button class="btn btn-primary" type="submit">Register</button>
           </div>

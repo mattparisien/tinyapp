@@ -11,25 +11,26 @@
   <title>TinyApp</title>
 </head>
 <body class="user-sign-in">
+  
   <div class="modal">
     
   </div>
-  <main class="centered" style="margin: 1em;">
+  <main class="justify-content-start" style="margin: 1em;">
     <div class="content">
-      <h3>Log In</h3>
+
+      
+      <h3 class="form-logo">TinyApp</h3>
+      <h5>Log In</h5>
       <form method="POST" action="/login">
         <div class="form-group mb-2 centered">
-          <div class="form-floating">
             <input class="form-control" id="floatingInput" type="email" name="email" placeholder="E-mail" style="width: 300px; margin: 1em 0;">
-            <label for="floatingInput">E-mail</label>
-          </div>
-          <div class="form-floating">
             <input class="form-control" id="floatingPassword" type="password" name="password" placeholder="Password" style="width: 300px; margin: 1em 0">
-            <label for="floatingPassword">Password</label>
-          </div>
+            <% if (validationError) { %>
+              <p class="custom-validation-error"><%=validationError%></p>
+            <% } %>
           <button class="btn btn-primary" type="submit">Log In</button>
         </div>
-        <p class="register-cta mt-4" style="font-size: 14px">New to TinyApp? <u><a href="/register">Register here</a></u></p>
+        <p class="register-cta mt-4" style="font-size: 14px">New to TinyApp? <a href="/register">Register here</a></p>
       </form>
     </div>
   </main>
