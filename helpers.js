@@ -4,17 +4,12 @@
 const fetchUserByEmail = function(obj, email) {
   for (key in obj) {
     if (obj[key]['email'] === email) {
-      return key;
+      return obj[key];
     }
   }
   return undefined;
 };
 
-// const fetchPassword = function(obj, id) {
-//   const filtered = Object.keys(obj)
-//   .filter(val => obj[val]['password'] === password);
-//   return obj[filtered]['password'];
-// };
 
 const fetchPassword = function(obj, id) {
   return obj[id]['password'];
