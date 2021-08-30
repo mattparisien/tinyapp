@@ -11,10 +11,10 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 
 //Require modularized code
-const { checkIfEmpty, 
-        fetchUserID,
+const { fetchUserID,
         fetchPassword, 
-        urlsForUser } = require('./helper_funcs');
+        urlsForUser,
+      } = require('./helper_funcs');
 
 
 
@@ -123,18 +123,21 @@ app.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const id = fetchUserID(users, email);
-  let msg = "";
 
+  //If fields are empty, send error
   if (!req.body.email || !req.body.password) {
     res.status(400) 
     const templateVars = { validationError: "Please fill out the fields." } ;
     res.render('login', templateVars);
 
+    //If no user ID exists, send error
   } else if (!id) {
     res.status(400);
     const templateVars = { validationError: "Email is not registered." } 
     res.render('login', templateVars);
-  } else if (!fetchPassword(users, password)) {
+
+  //If unhashed, req.body password does not match hashed database password, send error
+  } else if (!bcrypt.compareSync(password, fetchPassword(users, id))) {
     res.status(400);
     const templateVars = { validationError: "Incorrect password." };
     res.render('login', templateVars)
@@ -162,16 +165,21 @@ app.post('/register', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const hashedPassword = bcrypt.hashSync(password, 10);
-  console.log(hashedPassword)
 
+  //If fields are empty, send error
   if (!req.body.email || !req.body.password) {
-    res.status(400).send('Please fill out the fields.')
+    res.status(400);
+    const templateVars = { validationError: "Please fill out the fields." } 
+
+  //If user already exists, send error
   } else if (fetchUserID(users, email) !== undefined) {
     res.status(400);
     const templateVars = { validationError: "You already have an account with this email address." } 
     res.render('registration', templateVars)
   }
-  users[uniqueId] = new User(uniqueId, email, password);
+
+  //Else - register user
+  users[uniqueId] = new User(uniqueId, email, hashedPassword);
   res.cookie('user_id', uniqueId);
   console.log(users)
   res.redirect('/urls');
