@@ -22,10 +22,10 @@ body a:hover {
   text-decoration: underline;
 }
 
+
 h5 {
   font-weight: 400;
 }
-
 
 /* Nav-right call to actions */ 
 
@@ -35,6 +35,10 @@ h5 {
 
 .register_form {
   margin-left: 1em;
+}
+
+.form-floating>label {
+  color: grey;
 }
 
 .logged_out_container{
@@ -111,6 +115,15 @@ body {
 
 /* Log In / Log Out Body */
 
+#log_in_bg {
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  -webkit-filter: drop-shadow( 10px 10px 50px rgba(179, 135, 135, 0.5));
+  filter: drop-shadow( 3px 2px 10px rgba(0, 0, 0, .2));
+}
+
 .user-register, .user-sign-in {
   background-repeat: no-repeat;
   background-size: cover;
@@ -131,9 +144,6 @@ body {
   margin-bottom: 60px;
 }
 
-.content input::placeholder {
-  font-size: 14px;
-}
 
 
 .user-sign-in {
@@ -156,11 +166,7 @@ body {
 }
 
 
-.content form label {
-  margin-bottom: 0;
-}
-
-.content form input, .content form .btn {
+.content form .btn {
   width: 300px;
 }
 
