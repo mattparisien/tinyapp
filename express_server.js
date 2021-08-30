@@ -12,11 +12,10 @@ const bcrypt = require('bcryptjs');
 
 //Require modularized code
 const { fetchUserByEmail,
-        fetchPassword, 
         urlsForUser,
       } = require('./helpers');
 
-const { validateLogIn } = require('./validateForms');
+const { validateLogIn, validateRegister } = require('./validateForms');
 
 
 
@@ -130,7 +129,7 @@ app.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  validateLogIn(users, email, password, req, res);
+  validateLogIn(users, email, password, req, res, bcrypt);
   
   req.session.user_id = fetchUserByEmail(users, email)['id'];
   res.redirect('/urls');
@@ -155,17 +154,19 @@ app.post('/register', (req, res) => {
   const password = req.body.password;
   const hashedPassword = bcrypt.hashSync(password, 10);
 
-  //If fields are empty, send error
-  if (!req.body.email || !req.body.password) {
-    res.status(400);
-    const templateVars = { validationError: "Please fill out the fields." } 
+  validateRegister(users, email, req, res);
 
-  //If user already exists, send error
-  } else if (fetchUserByEmail(users, email) !== undefined) {
-    res.status(400);
-    const templateVars = { validationError: "You already have an account with this email address." } 
-    res.render('registration', templateVars)
-  }
+  // //If fields are empty, send error
+  // if (!req.body.email || !req.body.password) {
+  //   res.status(400);
+  //   const templateVars = { validationError: "Please fill out the fields." } 
+
+  // //If user already exists, send error
+  // } else if (fetchUserByEmail(users, email) !== undefined) {
+  //   res.status(400);
+  //   const templateVars = { validationError: "You already have an account with this email address." } 
+  //   res.render('registration', templateVars)
+  // }
 
   //Else - register user
   users[uniqueId] = new User(uniqueId, email, hashedPassword);
