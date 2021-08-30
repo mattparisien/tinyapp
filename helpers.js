@@ -12,7 +12,10 @@ const fetchUserByEmail = function(obj, email) {
 
 
 const fetchPassword = function(obj, id) {
-  return obj[id]['password'];
+  if (obj[id]) {
+    return obj[id]['password']
+  }
+  return undefined;
 };
 
 
