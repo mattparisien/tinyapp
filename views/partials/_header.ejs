@@ -1,6 +1,5 @@
 <header>
-
-  <nav class="navbar navbar-expand-md navbar-dark bg-success">
+  <nav class="navbar navbar-expand-md navbar-light py-3 px-5">
     <a class="navbar-brand" href="/urls">TinyApp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -15,56 +14,27 @@
     <div class="logged_out_container">
 
       <form class="sign_in_form" method="GET" action="/login">
-        <button class="btn btn-light" type="submit">Log In</button>
+        <button class="btn log-in-btn" type="submit">Log In</button>
       </form>
       <form class="register_form" method="GET" action="/register">
-        <button class="btn btn-secondary" type="submit">Register</button>
+        <button class="btn btn-secondary px-4" type="submit">Register</button>
       </form>
 
     </div>
     
     <div class="logged_in_container">
       <form class="logout_form" method="POST" action="/logout">
-        <label style="margin-right: 1em; color: white">
+        <label style="margin-right: 1em; color: var(--mainColor)">
           <% if (currentUser) { %>
             Logged In As: <%=currentUser['email']%>
           <% } %>
         </label>
-        <button class="logout_btn btn btn-light">Log Out</button>
+        <button class="logout_btn btn btn-secondary">Log Out</button>
         </form>
     </div>
     
   </nav>
 
-  <!-- Nav CTA Button Styles -->
-  <style>
-    /* Hide logout form by default for users who aren't logged in */
-    .logged_in_container {
-      display: none;
-    }
-
-    .register_form {
-      margin-left: 1em;
-    }
-
-  .logged_out_container{
-    display: flex;
-  }
-
-    .btn-secondary {
-      background-color: black;
-      border: 0px;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .in-view {
-      display: block;
-    }
-  </style>
-  
 <!-- Toggle login/logout forms-->
 <% if (currentUser) { %> 
   <script> 

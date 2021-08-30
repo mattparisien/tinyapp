@@ -3,20 +3,22 @@
 <head>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="/styles.css">
   <title>URL - TinyApp Example</title>
 </head>
 
-<body>
+<body class="urls_show">
   <%- include('partials/_header') %>
 
   <div class="card text-center">
       <div class="card-header"></div>
       <div class="card-body">
-        <h5 class="card-title">TinyURL for: <%= longURL %></h5>
-        <p class="card-text">Short URL: <a href="/u/<%= shortURL %>"><%= shortURL %></a></p>
+        <h5 class="card-title">TinyURL for: <strong><%=longURL%></strong></h5>
+        <p class="card-text">Short URL: <a href="<%=longURL%>"><%=shortURL%></a></p>
       </div>
     <div class="card-footer text-muted">
-      <h1>Edit</h1>
+      <h3>Edit</h3>
       <form class="form-inline justify-content-center" method="POST" action="<%=shortURL%>">
         <label>New URL: </label>
         <input type="text" name="longURL" placeholder="Long URL"> 
@@ -25,29 +27,6 @@
     </div>
   </div>
 
-  <style>
-
-    .card-footer form {
-      font-family: 'Helvetica'
-   }
-    .card-footer form input {
-     margin: 0 20px;
-     padding: 0 0 0 10px;
-     border: 0px;
-     border-radius: 5px;
-     box-shadow: 0 0px 20px 0 rgb(0 0 0 / 20%);
-     line-height: 2.4;
-    }
-
-    .card-footer form button {
-      border: 0px !important;
-      outline: none !important;
-      box-shadow: 0 0px 20px 0 rgb(0 0 2 / 20%);
-    }
-
-
-  </style>
-  
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

@@ -6,13 +6,20 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
   <title>TinyApp</title>
 </head>
 <body>
   <%- include('partials/_header') %> 
-  <main style="margin: 1em;">
-    <h3>My URLs</h3>
-    
+  <main class="py-3 px-5">
+    <% if (error) { %> 
+      <h4>
+        <a href="login">Log in</a><%=error%>
+      </h4>
+      
+    <% } else { %> 
+    <h3>My URLs</h3>    
     <table class="table">
       <thead>
         <tr>
@@ -23,26 +30,27 @@
         </tr>
       </thead>
       <tbody>
-        <% for(let url in urls) { %>
+        <% urls.forEach((obj) => { %>
+        
           <tr>
-            <td><%= url %></td>
-            <td><%= urls[url] %></td>
+            <td><%=obj['shortLink']%></td>
+            <td><%=obj['longLink']%></td>
             <td>
-              <form method="GET" action="urls/<%=url%>">
+              <form method="GET" action="urls/<%=obj['shortLink']%>">
                 <button class="btn btn-primary" type="submit" value="edit">Edit</button>
               </form>
             </td>
             <td>
-              <form method="POST" action="urls/<%=url%>/delete">
+              <form method="POST" action="urls/<%=shortURL%>/delete">
                <button class="btn btn-danger" type="submit" value="delete">Delete</button>
               </form>
             </td>
           </tr>
-        <% } %>
       </tbody>
+     <% }) %>
     </table>
-
     <form></form>
+    <% } %>
   </main>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

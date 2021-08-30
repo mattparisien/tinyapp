@@ -1,11 +1,25 @@
 const express = require('express');
+const PORT = 8080;
+const app = express();
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
+
+//Require dependencies
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const { checkIfEmpty, fetchUserID, fetchPassword } = require('./helper_funcs');
+const bcrypt = require('bcryptjs');
 
-const app = express();
-const PORT = 8080;
+//Require modularized code
+const { fetchUserID,
+        fetchPassword, 
+        urlsForUser,
+      } = require('./helper_funcs');
 
+
+
+//Reference directory from which serving static css file
+app.use(express.static(__dirname + '/assets')); 
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
@@ -21,12 +35,8 @@ const generateRandomString = function() {
   return text.substr(0,6).toUpperCase();
 };
 
-const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
-};
-
-const users = new Object(); //Serves as user database
+const urlDatabase = {}; //Serves as URL database
+const users = {} ; //Serves as user database
 
 class User {
   constructor(id, email, password) {
@@ -42,30 +52,52 @@ app.get('/', (req, res) => {
 
 app.get('/urls', (req, res) => {
   const currentUser = users[req.cookies['user_id']]; // get current user's id
-  const templateVars = { urls: urlDatabase, currentUser};
+  const cookieID = req.cookies['user_id']
+
+  if (!currentUser) {
+    res.status(400);
+    const templateVars = { error: ` to view your URL collection`, currentUser: null }
+    res.render('urls_index', templateVars);
+  };
+  
+  const urls = urlsForUser(urlDatabase, cookieID);
+  const templateVars = { urls, currentUser, error: null};
   res.render('urls_index', templateVars);
 });
 
 app.post('/urls', (req, res) => {
-  urlDatabase['longURL'] = req.body.longURL;
-  urlDatabase['shortURL'] = generateRandomString();
-  res.redirect(`/urls/${urlDatabase['shortURL']}`);
+  const shortURL = generateRandomString();
+  urlDatabase[shortURL] = { // Set a key equal to shortURL an open an object value
+    longURL: req.body.longURL,  // set value to longURL
+    userID: req.cookies['user_id'] //identify active user and attribute to shortURLs
+  }
+  res.redirect(`/urls/${shortURL}`);
 });
 
 app.get("/urls/new", (req, res) => {
   const currentUser = users[req.cookies['user_id']];
   const templateVars = { currentUser };
+
+  if (!req.cookies['user_id']) {
+    res.redirect('/login')
+  }
+
   res.render("urls_new", templateVars);
 });
 
 app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a route parameter
   const currentUser = users[req.cookies['user_id']];
-  const templateVars = {shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], currentUser};
+  const currentShortURL = req.params.shortURL;
+  console.log("current short URL: ", currentShortURL)
+  console.log(urlDatabase)
+
+  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[currentShortURL]['longURL'], currentUser};
   res.render('urls_show', templateVars);
 });
 
 app.get("/u/:shortURL", (req, res) => {
-  const longURL = urlDatabase['longURL'];
+  const shortURL = req.params.shortURL;
+  const longURL = urlDatabase[shortURL]['longURL'];
   res.redirect(longURL);
 });
 
@@ -77,13 +109,13 @@ app.post('/urls/:shortURL/delete', (req, res) => {
 
 app.post('/urls/:id', (req, res) => {
   const shortURL = req.params.id;
-  urlDatabase[shortURL] = req.body.longURL;
+  urlDatabase[shortURL]['longURL'] = req.body.longURL;
   res.redirect('/urls');
 });
 
 app.get('/login', (req, res) => {
   const currentUser = users[req.cookies['user_id']];
-  const templateVars = { currentUser };
+  const templateVars = { currentUser, validationError: null };
   res.render('login',templateVars);
 });
 
@@ -91,11 +123,24 @@ app.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const id = fetchUserID(users, email);
-  
-  if (!id) {
-    res.status(400).send('E-mail is not registered.')
-  } else if (!fetchPassword(users, password)) {
-    res.status(400).send('Invalid password.')
+
+  //If fields are empty, send error
+  if (!req.body.email || !req.body.password) {
+    res.status(400) 
+    const templateVars = { validationError: "Please fill out the fields." } ;
+    res.render('login', templateVars);
+
+    //If no user ID exists, send error
+  } else if (!id) {
+    res.status(400);
+    const templateVars = { validationError: "Email is not registered." } 
+    res.render('login', templateVars);
+
+  //If unhashed, req.body password does not match hashed database password, send error
+  } else if (!bcrypt.compareSync(password, fetchPassword(users, id))) {
+    res.status(400);
+    const templateVars = { validationError: "Incorrect password." };
+    res.render('login', templateVars)
   };
   
   res.cookie('user_id', id)
@@ -110,7 +155,7 @@ app.post('/logout', (req, res) => {
 
 app.get('/register', (req, res) => {
   const currentUser = users[req.cookies['user_id']];
-  const templateVars = { currentUser };
+  const templateVars = { currentUser, validationError: null };
   res.render('registration', templateVars);
 });
 
@@ -119,18 +164,25 @@ app.post('/register', (req, res) => {
   const uniqueId = generateRandomString();
   const email = req.body.email;
   const password = req.body.password;
-  
-  if (checkIfEmpty(email) || checkIfEmpty(password)) {
-    res.status(400).send('Please fill out the fields.')
+  const hashedPassword = bcrypt.hashSync(password, 10);
+
+  //If fields are empty, send error
+  if (!req.body.email || !req.body.password) {
+    res.status(400);
+    const templateVars = { validationError: "Please fill out the fields." } 
+
+  //If user already exists, send error
   } else if (fetchUserID(users, email) !== undefined) {
-    res.status(400).send('E-mail already exists.')
+    res.status(400);
+    const templateVars = { validationError: "You already have an account with this email address." } 
+    res.render('registration', templateVars)
   }
 
-  users[uniqueId] = new User(uniqueId, email, password);
+  //Else - register user
+  users[uniqueId] = new User(uniqueId, email, hashedPassword);
   res.cookie('user_id', uniqueId);
+  console.log(users)
   res.redirect('/urls');
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
-});
+

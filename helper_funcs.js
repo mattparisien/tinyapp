@@ -1,12 +1,5 @@
 // Helper Functions
 
-const checkIfEmpty = function(str) {
-  if (str.length !== 0) {
-    return false;
-  }
-  return true;
-};
-
 
 const fetchUserID = function(obj, email) {
   for (key in obj) {
@@ -17,13 +10,35 @@ const fetchUserID = function(obj, email) {
   return undefined;
 };
 
-const fetchPassword = function(obj, password) {
-  for (key in obj) {
-    if (obj[key]['password'] === password) {
-      return password;
-    }
-  }
-  return undefined;
+// const fetchPassword = function(obj, id) {
+//   const filtered = Object.keys(obj)
+//   .filter(val => obj[val]['password'] === password);
+//   return obj[filtered]['password'];
+// };
+
+const fetchPassword = function(obj, id) {
+  return obj[id]['password'];
 };
 
-module.exports = { checkIfEmpty, fetchUserID, fetchPassword }
+
+
+//Returns URLS specific to the client
+
+const urlsForUser = function(obj, cookieID) {
+  const userURLS = [];
+
+  for (shortURL in obj) {
+    if (obj[shortURL]['userID'] === cookieID) {
+      const links = { longLink: obj[shortURL]['longURL'], shortLink: shortURL }
+      userURLS.push(links)
+    }
+  }
+  return userURLS;
+}
+
+
+module.exports = { 
+  fetchUserID, 
+  fetchPassword,
+  urlsForUser
+}
