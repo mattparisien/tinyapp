@@ -11,7 +11,7 @@ const cookieSession = require('cookie-session');
 const bcrypt = require('bcryptjs');
 
 //Require modularized code
-const { fetchUserID,
+const { fetchUserByEmail,
         fetchPassword, 
         urlsForUser,
       } = require('./helper_funcs');
@@ -22,7 +22,12 @@ const { fetchUserID,
 app.use(express.static(__dirname + '/assets')); 
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cookieParser());
+app.use(cookieSession({
+  name: 'session',
+  keys: ['newest key', 'oldest key'],
+
+  // Cookie Options
+}))
 
 app.set('view engine', 'ejs');
 
@@ -51,8 +56,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/urls', (req, res) => {
-  const currentUser = users[req.cookies['user_id']]; // get current user's id
-  const cookieID = req.cookies['user_id']
+  const cookieID = req.session.user_id;
+  const currentUser = users[cookieID]; // get current user's id
 
   if (!currentUser) {
     res.status(400);
@@ -69,16 +74,16 @@ app.post('/urls', (req, res) => {
   const shortURL = generateRandomString();
   urlDatabase[shortURL] = { // Set a key equal to shortURL an open an object value
     longURL: req.body.longURL,  // set value to longURL
-    userID: req.cookies['user_id'] //identify active user and attribute to shortURLs
+    userID: req.session.user_id  //identify active user and attribute to shortURLs
   }
   res.redirect(`/urls/${shortURL}`);
 });
 
 app.get("/urls/new", (req, res) => {
-  const currentUser = users[req.cookies['user_id']];
+  const currentUser = users[req.session.user_id];
   const templateVars = { currentUser };
 
-  if (!req.cookies['user_id']) {
+  if (!req.session.user_id) {
     res.redirect('/login')
   }
 
@@ -86,10 +91,9 @@ app.get("/urls/new", (req, res) => {
 });
 
 app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a route parameter
-  const currentUser = users[req.cookies['user_id']];
+  const currentUser = users[req.session.user_id];
   const currentShortURL = req.params.shortURL;
-  console.log("current short URL: ", currentShortURL)
-  console.log(urlDatabase)
+
 
   const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[currentShortURL]['longURL'], currentUser};
   res.render('urls_show', templateVars);
@@ -114,7 +118,7 @@ app.post('/urls/:id', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  const currentUser = users[req.cookies['user_id']];
+  const currentUser = users[req.session.user_id];
   const templateVars = { currentUser, validationError: null };
   res.render('login',templateVars);
 });
@@ -122,7 +126,7 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  const id = fetchUserID(users, email);
+  const id = fetchUserByEmail(users, email);
 
   //If fields are empty, send error
   if (!req.body.email || !req.body.password) {
@@ -148,13 +152,13 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/logout', (req, res) => {
-  const currentUser = users[req.cookies['user_id']];
+  const currentUser = users[req.session.user_id];
   res.clearCookie('user_id');
   res.redirect('urls');
 });
 
 app.get('/register', (req, res) => {
-  const currentUser = users[req.cookies['user_id']];
+  const currentUser = users[req.session.user_id];
   const templateVars = { currentUser, validationError: null };
   res.render('registration', templateVars);
 });
@@ -172,7 +176,7 @@ app.post('/register', (req, res) => {
     const templateVars = { validationError: "Please fill out the fields." } 
 
   //If user already exists, send error
-  } else if (fetchUserID(users, email) !== undefined) {
+  } else if (fetchUserByEmail(users, email) !== undefined) {
     res.status(400);
     const templateVars = { validationError: "You already have an account with this email address." } 
     res.render('registration', templateVars)
@@ -180,8 +184,9 @@ app.post('/register', (req, res) => {
 
   //Else - register user
   users[uniqueId] = new User(uniqueId, email, hashedPassword);
-  res.cookie('user_id', uniqueId);
-  console.log(users)
+  // res.cookie('user_id', uniqueId);
+  const test = req.session.user_id = uniqueId;
+  console.log(test)
   res.redirect('/urls');
 });
 
