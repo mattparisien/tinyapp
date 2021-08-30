@@ -33,5 +33,11 @@ describe('fetchPassword', () => {
     const password = fetchPassword(testUsers, 'userRandomID');
     const expectedOutput = "purple-monkey-dinosaur";
     assert.equal(password, expectedOutput);
+  });
+
+  it ('should return undefined when given an invalid id', () => {
+    const password = fetchPassword(testUsers, 'randomrandomrandom');
+    const expectedOutput = undefined;
+    expect(password).to.be.undefined;
   })
 })
