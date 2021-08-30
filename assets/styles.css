@@ -112,9 +112,8 @@ body {
 /* Log In / Log Out Body */
 
 .user-register, .user-sign-in {
-  background-image: url(bg-user-sign-in-01.svg) !important;
   background-repeat: no-repeat;
-  background-size: 120%;
+  background-size: cover;
   background-position: right;
   overflow: hidden;
 }
