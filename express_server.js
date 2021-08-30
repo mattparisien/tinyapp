@@ -1,10 +1,22 @@
 const express = require('express');
+const PORT = 8080;
+const app = express();
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
+
+//Require dependencies
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const { checkIfEmpty, fetchUserID, fetchPassword, urlsForUser } = require('./helper_funcs');
+const bcrypt = require('bcryptjs');
 
-const app = express();
-const PORT = 8080;
+//Require modularized code
+const { checkIfEmpty, 
+        fetchUserID,
+        fetchPassword, 
+        urlsForUser } = require('./helper_funcs');
+
+
 
 //Reference directory from which serving static css file
 app.use(express.static(__dirname + '/assets')); 
@@ -92,7 +104,6 @@ app.get("/u/:shortURL", (req, res) => {
 app.post('/urls/:shortURL/delete', (req, res) => {
   const url = req.params.shortURL;
   delete urlDatabase[url];
-  console.log(urlDatabase)
   res.redirect('/urls');
 });
 
@@ -153,7 +164,9 @@ app.post('/register', (req, res) => {
   const uniqueId = generateRandomString();
   const email = req.body.email;
   const password = req.body.password;
-  
+  const hashedPassword = bcrypt.hashSync(password, 10);
+  console.log(hashedPassword)
+
   if (checkIfEmpty(email) || checkIfEmpty(password)) {
     res.status(400).send('Please fill out the fields.')
   } else if (fetchUserID(users, email) !== undefined) {
@@ -164,9 +177,8 @@ app.post('/register', (req, res) => {
   }
   users[uniqueId] = new User(uniqueId, email, password);
   res.cookie('user_id', uniqueId);
+  console.log(users)
   res.redirect('/urls');
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
-});
+
