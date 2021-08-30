@@ -1,4 +1,4 @@
-const { assert } = require('chai');
+const { assert, expect } = require('chai');
 const { fetchUserByEmail } = require('../helpers');
 
 const testUsers = {
@@ -15,9 +15,14 @@ const testUsers = {
 };
 
 describe('getUserByEmail', function() {
-  it('should return a user with valid email', function() {
+  it('should return a user with valid email', () => {
     const user = fetchUserByEmail(testUsers, "user@example.com")
     const expectedOutput = testUsers["userRandomID"];
     assert.equal(user, expectedOutput)
   });
+
+  it ('should return undefined if the user provides an invalid email', () => {
+    const user = fetchUserByEmail(testUsers, "randomemail@gmail.com")
+    expect(user).to.be.undefined;
+  })
 });
