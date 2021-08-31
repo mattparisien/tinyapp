@@ -5,31 +5,35 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="styles.css">
   <title>TinyApp</title>
 </head>
 <body class="user-sign-in">
-  
-  <div class="modal">
-    
-  </div>
-  <main class="justify-content-start" style="margin: 1em;">
+  <svg id="log_in_bg" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1080"><defs><linearGradient id="linear-gradient" x1="21.44" y1="-53.79" x2="1696.72" y2="927.39" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#29cdd6"/><stop offset="1" stop-color="#f9dd10"/></linearGradient></defs><path d="M0,0V739.32H0V991.81l26.67-15c26.66-15,80-45,133.33-50,53.33-5.34,106.67,15.28,160,5s106.67-49.69,160-85c53.33-35,106.67-65,160-50s106.67,75,160,80c53.33,5.34,106.67-45.28,160-54.94,53.33-10,106.67,20,160,45,53.33,24.66,106.67,45.28,160,35s106.67-49.69,160-35c53.33,15.28,106.67,84.66,160,110s106.67,4.69,160-5c53.33-10,106.67-10,133.33-10H1920V0Z" style="fill:url(#linear-gradient)"/></svg>
+  <main style="z-index: 1"; class="justify-content-start" style="margin: 1em;">
     <div class="content">
 
       
       <h3 class="form-logo">TinyApp</h3>
       <h5>Log In</h5>
       <form method="POST" action="/login">
-        <div class="form-group mb-2 centered">
+
+          <div class="form-floating">
             <input class="form-control" id="floatingInput" type="email" name="email" placeholder="E-mail" style="width: 300px; margin: 1em 0;">
+            <label for="floatingInput">E-mail</label>
+          </div>
+
+          <div class="form-floating">
             <input class="form-control" id="floatingPassword" type="password" name="password" placeholder="Password" style="width: 300px; margin: 1em 0">
+            <label for="floatingPassword">Password</label>
+          </div>
+      
             <% if (validationError) { %>
               <p class="custom-validation-error"><%=validationError%></p>
             <% } %>
           <button class="btn btn-primary" type="submit">Log In</button>
-        </div>
         <p class="register-cta mt-4" style="font-size: 14px">New to TinyApp? <a href="/register">Register here</a></p>
       </form>
     </div>

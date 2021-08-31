@@ -24,7 +24,7 @@
     
     <div class="logged_in_container">
       <form class="logout_form" method="POST" action="/logout">
-        <label style="margin-right: 1em; color: var(--mainColor)">
+        <label style="margin-right: 1em; color: #474039">
           <% if (currentUser) { %>
             Logged In As: <%=currentUser['email']%>
           <% } %>
@@ -42,6 +42,4 @@
     document.getElementsByClassName('logged_in_container')[0].classList.add('in-view');
  </script>
 <% } %>
-
-
 </header>

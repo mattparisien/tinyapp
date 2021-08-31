@@ -12,12 +12,10 @@
 </head>
 <body>
   <%- include('partials/_header') %> 
-  <main class="py-3 px-5">
+  <main class="py-5 px-5">
     <% if (error) { %> 
-      <h4>
-        <a href="login">Log in</a><%=error%>
-      </h4>
-      
+
+      <h4><%=error%> <a href="/urls/new">Create a new URL</a> to get started.</h4>
     <% } else { %> 
     <h3>My URLs</h3>    
     <table class="table">
