@@ -178,8 +178,9 @@ body {
   outline: none;
   border: 0px;
   background-color: var(--mainColor);
-  font-weight: 600;
 }
+
+
 
 .btn-primary:hover, nav .btn-secondary:hover {
   background-color: var(--deepGreen);
@@ -188,6 +189,7 @@ body {
 
 nav .btn-secondary {
   box-shadow: (0 1.5vw 3vw rgb(0 0 0 / 20%)) !important;
+  font-weight: 500;
 }
 
 
