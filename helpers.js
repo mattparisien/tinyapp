@@ -1,4 +1,5 @@
 // Helper Functions
+
 const generateRandomString = function() {
   let text = "";
   const charSet = 'abcdefghijklmnopqrstuvwxyz123456789';
@@ -8,6 +9,8 @@ const generateRandomString = function() {
   return text.substr(0,6).toUpperCase();
 };
 
+
+//Gets user object from database by email
 const fetchUserByEmail = function(obj, email) {
   for (key in obj) {
     if (obj[key]['email'] === email) {
@@ -17,7 +20,7 @@ const fetchUserByEmail = function(obj, email) {
   return undefined;
 };
 
-
+//Fetches password based on database & id
 const fetchPassword = function(obj, id) {
   if (obj[id]) {
     return obj[id]['password']
@@ -26,9 +29,7 @@ const fetchPassword = function(obj, id) {
 };
 
 
-
 //Returns URLS specific to the client
-
 const urlsForUser = function(obj, cookieID) {
   const userURLS = [];
 
