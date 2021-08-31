@@ -1,5 +1,5 @@
 const { assert, expect } = require('chai');
-const { fetchUserByEmail, fetchPassword } = require('../helpers');
+const { fetchUserByEmail, fetchPassword } = require('../server/helpers');
 
 const testUsers = {
   "userRandomID": {
@@ -25,7 +25,6 @@ describe('getUserByEmail', function() {
     const user = fetchUserByEmail(testUsers, "randomemail@gmail.com")
     expect(user).to.be.undefined;
   });
-
 });
 
 describe('fetchPassword', () => {
@@ -37,7 +36,6 @@ describe('fetchPassword', () => {
 
   it ('should return undefined when given an invalid id', () => {
     const password = fetchPassword(testUsers, 'randomrandomrandom');
-    const expectedOutput = undefined;
     expect(password).to.be.undefined;
-  })
+  });
 })
