@@ -23,14 +23,13 @@ const logIn = function(app, users, bcrypt) {
   
     if (validateLogIn(users, email, password, req, res, bcrypt)) {
       validateLogIn(users, email, password, req, res, bcrypt)
+      return;
     }
   
     //If log info is validated - continue
-    if (fetchUserByEmail(users, email)) {
       req.session.user_id = fetchUserByEmail(users, email)['id'];
-    }
-    
-    res.redirect('/urls');
+      res.redirect('/urls');
+
   });
 
 }
@@ -71,7 +70,6 @@ const register = function(app, users, User, bcrypt) {
     //If fields are empty, send error
     if (!req.body.email || !req.body.password) {
     const templateVars = { validationError: "Please fill out the fields." } 
-    // res.status(400);
     return templateVars;
   
   
@@ -79,15 +77,14 @@ const register = function(app, users, User, bcrypt) {
     } else if (fetchUserByEmail(users, email) !== undefined) {
       const templateVars = "You already have an account with this email address." 
       res.status(400).redirect(`/register?error=${templateVars}`);
+      return;
     } 
   
-  
+      //If info is validated - continue
     users[uniqueId] = new User(uniqueId, email, hashedPassword);
     req.session.user_id = uniqueId;
     res.redirect('/urls');
-  
-    //If info is validated - continue
-  });
+    });
 
 }
 
