@@ -78,7 +78,7 @@ const register = function(app, users, User, bcrypt) {
   //If user already exists, send error
     } else if (fetchUserByEmail(users, email) !== undefined) {
       const templateVars = "You already have an account with this email address." 
-      res.redirect(`/register?error=${templateVars}`);
+      res.status(400).redirect(`/register?error=${templateVars}`);
     } 
   
   
