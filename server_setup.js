@@ -24,8 +24,8 @@ const runServer = function() {
 
   app.set('view engine', 'ejs');
 
-  return app;
+  return { app, bcrypt };
 
 };
 
-module.exports = { runServer}
+module.exports = { runServer }
