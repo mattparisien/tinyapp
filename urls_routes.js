@@ -1,3 +1,5 @@
+const { urlsForUser } = require('./helpers');
+
 const runUrls = function(app, urlDatabase, users) {
 
   app.get('/urls', (req, res) => {
@@ -53,7 +55,7 @@ const runUrlsNew = function (app, users) {
   
 }
 
-const runUrlsParams = function(app) {
+const runUrlsParams = function(app, urlDatabase, users) {
 
 
 app.get('/urls/:shortURL', (req, res) => { // ':' indicates that the ID is a route parameter
