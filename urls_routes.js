@@ -1,4 +1,4 @@
-const { urlsForUser } = require('./helpers');
+const { urlsForUser, generateRandomString } = require('./helpers');
 
 const runUrls = function(app, urlDatabase, users) {
 
@@ -40,13 +40,15 @@ const runUrlsNew = function (app, users) {
 
   app.get("/urls/new", (req, res) => {
 
+    if (!req.session.user_id) {
+      res.redirect('login');
+    };
+ 
     const currentUser = users[req.session.user_id];
-  
+
     if (req.query.error) {
       const templateVars = { error: req.query.error, currentUser };
       res.render('urls_new', templateVars);
-    } else if (!req.session.user_id) {
-      res.redirect('/login')
     } 
   
     const templateVars = { currentUser, error: null };
