@@ -1,3 +1,5 @@
+//Contains routing for endpoints to /urls & /urls/new paths
+
 const { urlsForUser, generateRandomString } = require('./helpers');
 
 const runUrls = function(app, urlDatabase, users) {
@@ -38,20 +40,21 @@ const runUrls = function(app, urlDatabase, users) {
   });
 };
 
-const runUrlsNew = function(app) {
+const runUrlsNew = function(app, users) {
 
   app.get("/urls/new", (req, res) => {
 
-    const currentUser = req.session.user_id
+    let currentUser = req.session.user_id;
 
     if (!currentUser) {
       res.status(400).redirect('/login');
       return;
     } else if (req.query.error) {
-      const templateVars = { error: req.query.error, currentUser };
+      const templateVars = { error: req.query.error, currentUser};
       res.render('urls_new', templateVars);
     } 
 
+    currentUser = users[req.session.user_id];
     const templateVars = { currentUser, error: null };
     res.render("urls_new", templateVars);
   
