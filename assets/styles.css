@@ -19,11 +19,11 @@ main {
 
 body a {
   color: var(--mainColor);
+  transition: 300ms ease;
 }
 
 body a:hover {
   color: var(--deepGreen);
-  text-decoration: underline;
 }
 
 
@@ -66,12 +66,14 @@ display: flex;
 
 nav {
   box-shadow: 0 10px 10px -10px rgb(33 35 38 / 10%);
+  background: linear-gradient(to right, #2fcdd0, #f9dd10);
 }
 
 
 .navbar-brand {
   font-family: 'Pacifico';
   font-size: 30px;
+  color: var(--creamColor) !important;
 }
 
 .nav-link, nav .log-in-btn {
