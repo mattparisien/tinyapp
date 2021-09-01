@@ -1,6 +1,6 @@
 //Contains routing for log in / log out/ register endpoint
 
-const { validateLogIn } = require('./validateForms');
+const { validateLogIn, validateRegister } = require('./validateForms');
 const { generateRandomString, fetchUserByEmail, fetchPassword } = require('./helpers');
 
 const logIn = function(app, users, bcrypt) {
@@ -11,10 +11,11 @@ const logIn = function(app, users, bcrypt) {
     if (req.query.error) {
       const templateVars = { currentUser, validationError: req.query.error };
       res.render('login',templateVars);
+    } else {
+      const templateVars = { currentUser, validationError: null };
+      res.render('login',templateVars);
     }
-  
-    const templateVars = { currentUser, validationError: null };
-    res.render('login',templateVars);
+
   });
   
   app.post('/login', (req, res) => {
@@ -23,15 +24,11 @@ const logIn = function(app, users, bcrypt) {
   
     if (validateLogIn(users, email, password, req, res, bcrypt)) {
       validateLogIn(users, email, password, req, res, bcrypt)
-      return;
-    }
-  
-    //If log info is validated - continue
+    } else if (fetchUserByEmail(users, email)) {
       req.session.user_id = fetchUserByEmail(users, email)['id'];
       res.redirect('/urls');
-
+    }
   });
-
 }
 
 
@@ -66,19 +63,11 @@ const register = function(app, users, User, bcrypt) {
     const email = req.body.email;
     const password = req.body.password;
     const hashedPassword = bcrypt.hashSync(password, 10);
-    
-    //If fields are empty, send error
-    if (!req.body.email || !req.body.password) {
-    const templateVars = { validationError: "Please fill out the fields." } 
-    return templateVars;
-  
-  
-  //If user already exists, send error
-    } else if (fetchUserByEmail(users, email) !== undefined) {
-      const templateVars = "You already have an account with this email address." 
-      res.status(400).redirect(`/register?error=${templateVars}`);
+
+    if (validateRegister(users, email, req, res)) {
+      validateRegister(users, email, req, res);
       return;
-    } 
+    }
   
       //If info is validated - continue
     users[uniqueId] = new User(uniqueId, email, hashedPassword);
