@@ -23,27 +23,16 @@ const validateLogIn = function(object, email, password, req, res, bcrypt) {
 
 
 
-// const validateRegister = function(object, email, req, res) {
+const validateRegister = function(object, email, req, res) {
 
-  
+//If fields are empty, send error
+if (!req.body.email || !req.body.password) { 
+  res.status(400).redirect(`/register?error=${'Please fill out the fields.'}`)
 
-// //If fields are empty, send error
-// if (!req.body.email || !req.body.password) {
-//   const templateVars = { validationError: "Please fill out the fields." } 
-//   // res.status(400);
-//   return templateVars;
+//If user already exists, send error
+} else if (fetchUserByEmail(object, email) !== undefined) {
+    res.status(400).redirect(`/register?error=${'You already have an account with this email address.'}`);
+  } 
+}
 
-
-// //If user already exists, send error
-// } else if (fetchUserByEmail(object, email) !== undefined) {
-//     const templateVars = "You already have an account with this email address." 
-//     // res.status(400).render('registration', templateVars)
-//     res.redirect('/register');
-//   } else {
-//     object[uniqueId] = new User(uniqueId, email, hashedPassword);
-//     req.session.user_id = uniqueId;
-//     res.redirect('/urls');
-//   }
-// }
-
-module.exports = { validateLogIn };
+module.exports = { validateLogIn, validateRegister };
