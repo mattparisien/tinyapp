@@ -29,7 +29,18 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 - Run the development web server using the `node express_server.js` command.
 
 ## Table of Contents
-* **express_server.js**: this file serves as an index and requires all routing modules before calling their functions to initiate the server. 
-* **urls_routes.js**: contains all routing to all endpoints with a path of /urls.
-* **user_entries.js**: contains all routing pertaining to user entry points (register, log in & log out).
+
+## File Structure & Description 
+
+### **express_server.js**: 
+* This file serves as an index and requires all routing modules before calling their functions to initiate the server. 
+### **server_setup.js
+* Contains the setUpServer module, which sets up an express server and requires all dependencies needed for the project, including setting up EJS as the app's view engine.
+### **urls_routes.js**: 
+* Contains all routing to endpoints with a path of /urls.
+### **user_entries.js**: 
+* Contains all routing pertaining to user entry points (register, log in & log out).
+
+
+
 
