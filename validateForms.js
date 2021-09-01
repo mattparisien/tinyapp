@@ -6,21 +6,18 @@ const validateLogIn = function(object, email, password, req, res, bcrypt) {
   if (!req.body.email || !req.body.password) {
     const templateVars = { validationError: "Please fill out the fields." } ;
     res.status(400).render('login', templateVars);
-    // return false;
+    return false;
   
     //If no user ID exists, send error
   } else if (!fetchUserByEmail(object, email)) {
     res.redirect(`/login?error=${"Email is not registered."}`);
-    // return false;
   
   //If unhashed, req.body password does not match hashed database password, send error
   } else if (!bcrypt.compareSync(password, fetchPassword(object, fetchUserByEmail(object, email)['id']))) {
     const templateVars = { validationError: "Incorrect password." };
     res.status(400).render('login', templateVars)
-    // return false;
   };
 };
-
 
 
 const validateRegister = function(object, email, req, res) {
