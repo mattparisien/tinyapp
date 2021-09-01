@@ -4,6 +4,10 @@ const { urlsForUser, generateRandomString } = require('./helpers');
 
 const runUrls = function(app, urlDatabase, users) {
 
+  app.get('/', () => {
+    res.redirect('urls');
+  });
+
   app.get('/urls', (req, res) => {
     const cookieID = req.session.user_id;
     const currentUser = users[cookieID]; // get current user's id
