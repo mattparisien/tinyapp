@@ -30,6 +30,6 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 
 ## Table of Contents
 * **express_server.js**: this file serves as an index and requires all routing modules before calling their functions to initiate the server. 
-* **urls_routes.js**: contains all routing to any path beggining with /urls.
+* **urls_routes.js**: contains all routing to all endpoints beggining with /urls.
 * **user_entries.js**: contains all routing pertaining to user entry points (register, log in & log out).
 
