@@ -4,7 +4,7 @@ const { urlsForUser, generateRandomString } = require('./helpers');
 
 const runUrls = function(app, urlDatabase, users) {
 
-  app.get('/', () => {
+  app.get('/', (req, res) => {
     res.redirect('urls');
   });
 
