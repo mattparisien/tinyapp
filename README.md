@@ -38,7 +38,7 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 
 ## File Structure & Description 
 
-### > <u> Server Directory </u>
+### > <span style="color: green"> <u> Server Directory </u> </span>
 
 #### **express_server.js**: 
 * This file serves as an index and requires all routing modules before calling their functions to initiate the server. 
@@ -53,16 +53,25 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 #### **helpers.js**:
 * Contains various modules serving as helper functions for the project.
 * Helper functions include:
--generateRandomString(): generates a random short URL.
--fetchUserByEmail(obj, email): returns the user object from the mock database from the email.
--fetchPassword(obj, id): returns the user's password from the mock databse given their user id.
--urlsForUser(obj, cookieID): returns an array of objects containing a list of the user's long URL's and corresponding short URL's. 
+    * generateRandomString(): generates a random short URL.
+    * fetchUserByEmail(obj, email): returns the user object from the mock database from the email.
+    * fetchPassword(obj, id): returns the user's password from the mock databse given their user id.
+    * urlsForUser(obj, cookieID): returns an array of objects containing a list of the user's long URL's and corresponding short URL's. 
 #### **validateForms.js**:
 * Contains the validateLogIn and validateRegister modules
 * Both functions aim to validate user registration/log in and handle the errors that may come up during the registration/log-in process.
 #### **globalVars.js**:
 * Contains the globalVars function, which returns an object containing the project's global variables.
 * Global variables include: a url database, a user's database, and a class of User (which can instantiate new user objects).
+
+### > <span style="color: green"> <u> Views Directory </u> </span>
+
+#### **registration.ejs**
+#### **login.ejs**
+#### **urls_index.ejs**
+#### **urls_new.ejs**
+#### **urls_show.ejs**
+
 
 
 
