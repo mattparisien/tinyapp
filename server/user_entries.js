@@ -1,6 +1,6 @@
 //Contains routing for log in / log out/ register endpoint
 
-const { validateLogIn, catchRegisterErrors } = require("./validateForms");
+const { catchLogInErrors, catchRegisterErrors } = require("./authentication");
 const {
   generateRandomString,
   fetchUserByEmail,
@@ -24,8 +24,8 @@ const logIn = function (app, users, bcrypt) {
     const email = req.body.email;
     const password = req.body.password;
 
-    if (validateLogIn(users, email, password, req, res, bcrypt)) {
-      validateLogIn(users, email, password, req, res, bcrypt);
+    if (catchLogInErrors(users, email, password, req, res, bcrypt)) {
+      catchLogInErrors(users, email, password, req, res, bcrypt);
     } else if (fetchUserByEmail(users, email)) {
       req.session.user_id = fetchUserByEmail(users, email)["id"];
       res.redirect("/urls");

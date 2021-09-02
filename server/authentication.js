@@ -2,7 +2,7 @@
 
 const { fetchUserByEmail, fetchPassword } = require('./helpers');
 
-const validateLogIn = function(object, email, password, req, res, bcrypt) {
+const catchLogInErrors = function(object, email, password, req, res, bcrypt) {
   if (!req.body.email || !req.body.password) {
     res.status(400).redirect(`login?error=${'Please fill out the fields.'}`)
   
@@ -32,4 +32,4 @@ if (!req.body.email || !req.body.password) {
  return { hasError: false, error: null};
 }
 
-module.exports = { validateLogIn, catchRegisterErrors };
+module.exports = { catchLogInErrors, catchRegisterErrors };
