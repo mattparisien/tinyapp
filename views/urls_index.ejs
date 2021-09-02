@@ -13,6 +13,7 @@
 <body>
   <%- include('partials/_header') %> 
   <main class="py-5 px-5">
+    
     <% if (error) { %> 
 
       <h4><%=error%> <a href="/urls/new">Create a new URL</a> to get started.</h4>
@@ -28,6 +29,7 @@
         </tr>
       </thead>
       <tbody>
+
         <% urls.forEach((obj) => { %>
         
           <tr>

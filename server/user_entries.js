@@ -50,7 +50,6 @@ const register = function (app, users, User, bcrypt) {
     } else {
       const currentUser = users[req.session.user_id];
       const templateVars = { currentUser, validationError: null };
-      console.log("before render");
       res.render("registration", templateVars);
     }
   });
@@ -60,7 +59,7 @@ const register = function (app, users, User, bcrypt) {
     const email = req.body.email;
     const password = req.body.password;
     const hashedPassword = bcrypt.hashSync(password, 10);
-    console.log("validation test, ", validateRegister(users, email, req, res));
+    
     if (validateRegister(users, email, req, res)) {
       validateRegister(users, email, req, res);
     } else {

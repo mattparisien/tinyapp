@@ -13,7 +13,8 @@ const runServer = function () {
   const bcrypt = require("bcryptjs");
 
   //Reference directory from which serving static css file
-  app.use(express.static(__dirname + "/assets"));
+  app.use(express.static(path.join(__dirname, '../assets')))
+
 
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(

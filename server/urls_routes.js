@@ -9,7 +9,6 @@ const runUrls = function (app, urlDatabase, users) {
 
   app.get("/urls", (req, res) => {
     const cookieID = req.session.user_id;
-    console.log(cookieID)
     const currentUser = users[cookieID]; // get current user's id
 
     if (!currentUser) {
@@ -20,7 +19,7 @@ const runUrls = function (app, urlDatabase, users) {
     } else {
       const urls = urlsForUser(urlDatabase, cookieID);
       const templateVars = { urls, currentUser, error: null };
-      res.render("../views/urls_index", templateVars);
+      res.render("views/urls_index", templateVars);
     }
   });
 
