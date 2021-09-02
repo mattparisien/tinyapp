@@ -24,12 +24,16 @@ const logIn = function (app, users, bcrypt) {
     const email = req.body.email;
     const password = req.body.password;
 
-    if (catchLogInErrors(users, email, password, req, res, bcrypt)) {
-      catchLogInErrors(users, email, password, req, res, bcrypt);
-    } else if (fetchUserByEmail(users, email)) {
-      req.session.user_id = fetchUserByEmail(users, email)["id"];
-      res.redirect("/urls");
-    }
+    const hasLogInError = catchLogInErrors(users, email, password, req, bcrypt);
+
+    if (hasLogInError.error) {
+      res.status(400).redirect(`login?error=${hasLogInError.error}`);
+      return;
+    } 
+
+    req.session.user_id = fetchUserByEmail(users, email)["id"];
+    res.redirect("/urls");
+    
   });
 };
 
@@ -62,7 +66,7 @@ const register = function (app, users, User, bcrypt) {
 
     const registrationError = catchRegisterErrors(users, email, req);
 
-    if (registrationError.hasError) {
+    if (registrationError.error) {
       res.status(400).redirect(`/register?error=${registrationError.error}`);
       return; 
     }
