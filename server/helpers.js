@@ -20,20 +20,20 @@ const fetchUserByEmail = function (obj, email) {
 };
 
 //Fetches password based on database & id
-const fetchPassword = function (obj, id) {
-  if (obj[id]) {
-    return obj[id]["password"];
+const fetchPassword = function (userDatabase, id) {
+  if (userDatabase[id]) {
+    return userDatabase[id]["password"];
   }
   return undefined;
 };
 
 //Returns URLS specific to the client
-const urlsForUser = function (obj, cookieID) {
+const urlsForUser = function (urlDatabase, cookieID) {
   const userURLS = [];
 
-  for (shortURL in obj) {
-    if (obj[shortURL]["userID"] === cookieID) {
-      const links = { longLink: obj[shortURL]["longURL"], shortLink: shortURL };
+  for (shortURL in urlDatabase) {
+    if (urlDatabase[shortURL]["userID"] === cookieID) {
+      const links = { longLink: urlDatabase[shortURL]["longURL"], shortLink: shortURL };
       userURLS.push(links);
     }
   }
