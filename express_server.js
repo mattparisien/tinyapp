@@ -22,8 +22,3 @@ runUrlsParams(app, global.urlDatabase, global.users);
 logIn(app, global.users, bcrypt);
 logOut(app, global.users);
 register(app, global.users, User, bcrypt);
-
-
-
-
-
