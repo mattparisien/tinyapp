@@ -25,8 +25,8 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 
 ## Dev Dependencies
 
-- Chai
 - Mocha
+- Chai
 - Nodemon
 
 ## Getting Started
@@ -55,7 +55,13 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 -fetchUserByEmail(obj, email): returns the user object from the mock database from the email.
 -fetchPassword(obj, id): returns the user's password from the mock databse given their user id.
 -urlsForUser(obj, cookieID): returns an array of objects containing a list of the user's long URL's and corresponding short URL's. 
--
+### **validateForms.js***
+* Contains the validateLogIn and validateRegister modules
+* Both functions aim to validate user registration/log in and handle the errors that may come up during the registration/log-in process.
+### **globalVars.js*** 
+* Contains the globalVars function, which returns an object containing the project's global variables.
+* Global variables include: a url database, a user's database, and a class of User (which can instantiate new user objects).
+
 
 
 
