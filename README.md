@@ -58,7 +58,7 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 #### **validateForms.js**:
 * Contains the validateLogIn and validateRegister modules
 * Both functions aim to validate user registration/log in and handle the errors that may come up during the registration/log-in process.
-#### **globalVars.js***:
+#### **globalVars.js**:
 * Contains the globalVars function, which returns an object containing the project's global variables.
 * Global variables include: a url database, a user's database, and a class of User (which can instantiate new user objects).
 
