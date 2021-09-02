@@ -40,7 +40,7 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 
 ### > <span style="color: green"> <u> Server Directory </u> </span>
 
-#### **express_server.js**: 
+#### [**express_server.js**](https://github.com/mattparisien/tinyapp/blob/main/server/express_server.js): 
 * This file serves as an index and requires all routing modules before calling their functions to initiate the server. 
 #### **server_setup.js**
 * Contains the setUpServer module, which sets up an express server.
