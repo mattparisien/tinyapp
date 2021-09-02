@@ -28,7 +28,7 @@ const fetchPassword = function (userDatabase, id) {
 };
 
 //Returns URLS specific to the client
-const urlsForUser = function (urlDatabase, cookieID) {
+const fetchUserUrls = function (urlDatabase, cookieID) {
   const userURLS = [];
 
   for (shortURL in urlDatabase) {
@@ -44,5 +44,5 @@ module.exports = {
   generateRandomString,
   fetchUserByEmail,
   fetchPassword,
-  urlsForUser,
+  fetchUserUrls,
 };

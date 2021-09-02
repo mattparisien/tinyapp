@@ -1,6 +1,6 @@
 //Contains routing for endpoints to /urls & /urls/new paths
 
-const { urlsForUser, generateRandomString } = require("./helpers");
+const { fetchUserUrls, generateRandomString } = require("./helpers");
 
 const runUrls = function (app, urlDatabase, users) {
   app.get("/", (req, res) => {
@@ -13,11 +13,12 @@ const runUrls = function (app, urlDatabase, users) {
 
     if (!currentUser) {
       res.status(400).redirect("/login");
-    } else if (urlsForUser(urlDatabase, cookieID).length === 0) {
+    } else if (fetchUserUrls(urlDatabase, cookieID).length === 0) {
       const templateVars = { currentUser, error: `You have no tiny URLs.` };
       res.render("urls_index", templateVars);
     } else {
-      const urls = urlsForUser(urlDatabase, cookieID);
+      const urls = fetchUserUrls(urlDatabase, cookieID);
+    
       const templateVars = { urls, currentUser, error: null };
       res.render("urls_index", templateVars);
     }
