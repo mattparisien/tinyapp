@@ -38,27 +38,27 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 
 ## File Structure & Description 
 
-### **express_server.js**: 
+#### **express_server.js**: 
 * This file serves as an index and requires all routing modules before calling their functions to initiate the server. 
-### **server_setup.js**
+#### **server_setup.js**
 * Contains the setUpServer module, which sets up an express server.
 * Requires all dependencies needed for the project. 
 * Sets up EJS as the app's view engine.
-### **urls_routes.js**: 
+#### **urls_routes.js**: 
 * Contains all routing to endpoints with a path of /urls.
-### **user_entries.js**: 
+#### **user_entries.js**: 
 * Contains all routing pertaining to user entry points (register, log in & log out).
-### **helpers.js*** 
+#### **helpers.js**:
 * Contains various modules serving as helper functions for the project.
 * Helper functions include:
 -generateRandomString(): generates a random short URL.
 -fetchUserByEmail(obj, email): returns the user object from the mock database from the email.
 -fetchPassword(obj, id): returns the user's password from the mock databse given their user id.
 -urlsForUser(obj, cookieID): returns an array of objects containing a list of the user's long URL's and corresponding short URL's. 
-### **validateForms.js***
+#### **validateForms.js**:
 * Contains the validateLogIn and validateRegister modules
 * Both functions aim to validate user registration/log in and handle the errors that may come up during the registration/log-in process.
-### **globalVars.js*** 
+#### **globalVars.js***:
 * Contains the globalVars function, which returns an object containing the project's global variables.
 * Global variables include: a url database, a user's database, and a class of User (which can instantiate new user objects).
 
