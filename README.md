@@ -38,7 +38,7 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 
 ## File Structure & Description 
 
-### > <span style="color: blue"> Server Directory </span>
+### > <u> Server Directory </u>
 
 #### **express_server.js**: 
 * This file serves as an index and requires all routing modules before calling their functions to initiate the server. 
