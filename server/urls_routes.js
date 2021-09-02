@@ -19,7 +19,7 @@ const runUrls = function (app, urlDatabase, users) {
     } else {
       const urls = urlsForUser(urlDatabase, cookieID);
       const templateVars = { urls, currentUser, error: null };
-      res.render("views/urls_index", templateVars);
+      res.render("urls_index", templateVars);
     }
   });
 
