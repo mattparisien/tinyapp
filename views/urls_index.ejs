@@ -30,13 +30,13 @@
       </thead>
       <tbody>
 
-        <% urls.forEach((obj) => { %>
+        <% urls.forEach((urlDatabase) => { %>
         
           <tr>
-            <td><%=obj['shortLink']%></td>
-            <td><%=obj['longLink']%></td>
+            <td><%=urlDatabase['shortLink']%></td>
+            <td><%=urlDatabase['longLink']%></td>
             <td>
-              <form method="GET" action="urls/<%=obj['shortLink']%>">
+              <form method="GET" action="urls/<%=urlDatabase['shortLink']%>">
                 <button class="btn btn-primary" type="submit" value="edit">Edit</button>
               </form>
             </td>

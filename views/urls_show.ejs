@@ -12,21 +12,28 @@
   <%- include('partials/_header') %>
 
   <div class="card text-center">
-      <div class="card-header"></div>
       <div class="card-body">
-        <h5 class="card-title">TinyURL for: <strong><%=longURL%></strong></h5>
-        <p class="card-text">Short URL: <a href="/u/<%=shortURL%>" target="_blank"><%=shortURL%></a></p>
+        <div class="info">
+          <h2 class="card-text">Your tiny url: <a href="/u/<%=shortURL%>" target="_blank"><%=shortURL%></a> </h2> 
+          <br>
+          <div class="long-url-info"></div><h5 class="card-title">For <strong><%=longURL%></strong></h5>
+          <div class="display-clicks-card">
+            <h3 class="clickNumber">Clicked <br> <strong><%=clickNumber%> times!</strong></h3>
+          </div>
+        </div>
+        <a class="collapse-btn" href="#collapse" data-toggle="collapse">Edit your URL</a>
+        <div class="collapse" id="collapse">
+          <h3>Edit</h3>
+          <form class="form-inline justify-content-center" method="POST" action="<%=shortURL%>?_method=PUT">
+            <label>New URL: </label>
+            <input type="text" name="longURL" placeholder="Long URL"> 
+            <button class="btn btn-primary" type="submit">Update</button>
+          </form>
+        </div>
       </div>
-    <div class="card-footer text-muted">
-      <h3>Edit</h3>
-      <form class="form-inline justify-content-center" method="POST" action="<%=shortURL%>?_method=PUT">
-        <label>New URL: </label>
-        <input type="text" name="longURL" placeholder="Long URL"> 
-        <button class="btn btn-primary" type="submit">Update</button>
-      </form>
-    </div>
   </div>
-  <h3 class="clickNumber">This short URL has been clicked <strong><%=clickNumber%> times!</strong></h3>
+  </div>
+
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
