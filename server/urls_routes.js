@@ -74,6 +74,7 @@ const runUrlsParams = function (app, urlDatabase, users) {
   });
 
   app.get("/u/:shortURL", (req, res) => {
+    console.log('in before')
     const shortURL = req.params.shortURL;
     const longURL = urlDatabase[shortURL]["longURL"];
     res.redirect(longURL);
@@ -83,6 +84,13 @@ const runUrlsParams = function (app, urlDatabase, users) {
     delete urlDatabase[req.params.shortURL]
     res.redirect('/urls');
   })
+
+  app.put('/urls/:shortURL', (req, res) => {
+    const shortURL = req.params.shortURL;
+    const updatedURL = req.body.longURL;
+    urlDatabase[shortURL]['longURL'] = updatedURL;
+    res.redirect('/urls');
+  })  
 
   app.post("/urls/:id", (req, res) => {
     const shortURL = req.params.id;
