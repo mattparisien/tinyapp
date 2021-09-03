@@ -10,10 +10,10 @@ const generateRandomString = function () {
 };
 
 //Gets user object from database by email
-const fetchUserByEmail = function (obj, email) {
-  for (key in obj) {
-    if (obj[key]["email"] === email) {
-      return obj[key];
+const fetchUserByEmail = function (userDatabase, email) {
+  for (key in userDatabase) {
+    if (userDatabase[key]["email"] === email) {
+      return userDatabase[key];
     }
   }
   return undefined;
@@ -33,7 +33,10 @@ const fetchUserUrls = function (urlDatabase, cookieID) {
 
   for (shortURL in urlDatabase) {
     if (urlDatabase[shortURL]["userID"] === cookieID) {
-      const links = { longLink: urlDatabase[shortURL]["longURL"], shortLink: shortURL };
+      const links = {
+        longLink: urlDatabase[shortURL]["longURL"],
+        shortLink: shortURL,
+      };
       userURLS.push(links);
     }
   }

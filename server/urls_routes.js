@@ -1,7 +1,6 @@
 //Contains routing for endpoints to /urls & /urls/new paths
 
 const { fetchUserUrls, generateRandomString } = require("./helpers");
-const { trackClickNumber } = require('./trackers');
 
 const runUrls = function (app, urlDatabase, users) {
   app.get("/", (req, res) => {
@@ -10,7 +9,7 @@ const runUrls = function (app, urlDatabase, users) {
 
   app.get("/urls", (req, res) => {
     const cookieID = req.session.user_id;
-    const currentUser = users[cookieID]; 
+    const currentUser = users[cookieID];
 
     if (!currentUser) {
       res.status(400).redirect("/login");
@@ -19,7 +18,6 @@ const runUrls = function (app, urlDatabase, users) {
       res.render("urls_index", templateVars);
     } else {
       const urls = fetchUserUrls(urlDatabase, cookieID);
-
       const templateVars = { urls, currentUser, error: null };
       res.render("urls_index", templateVars);
     }
@@ -36,6 +34,7 @@ const runUrls = function (app, urlDatabase, users) {
       // Set a key equal to shortURL an open an object value
       longURL: req.body.longURL, // set value to longURL
       userID: req.session.user_id, //identify active user and attribute to shortURLs
+      clickNumber: 0,
     };
     res.redirect(`/urls/${shortURL}`);
   });
@@ -64,13 +63,14 @@ const runUrlsParams = function (app, urlDatabase, users) {
   app.get("/urls/:shortURL", (req, res) => {
     const currentUser = users[req.session.user_id];
     const currentShortURL = req.params.shortURL;
-    const clickNumber = urlDatabase[currentShortURL]['clickNumber'];
+    console.log("current short: ", currentShortURL);
+    const clickNumber = urlDatabase[currentShortURL]["clickNumber"];
 
     const templateVars = {
       shortURL: req.params.shortURL,
       longURL: urlDatabase[currentShortURL]["longURL"],
       currentUser,
-      clickNumber
+      clickNumber,
     };
     res.render("urls_show", templateVars);
   });
@@ -78,10 +78,9 @@ const runUrlsParams = function (app, urlDatabase, users) {
   //Set global click variable and increment every time user submits a get request to short URL
   let clicks = 0;
 
-  app.get("/u/:shortURL", (req, res) => {  
+  app.get("/u/:shortURL", (req, res) => {
     const shortURL = req.params.shortURL;
-    urlDatabase[shortURL]['clickNumber'] = clicks++;
-    console.log(urlDatabase)
+    urlDatabase[shortURL]["clickNumber"] = clicks++;
     const longURL = urlDatabase[shortURL]["longURL"];
     res.redirect(longURL);
   });

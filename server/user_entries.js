@@ -29,11 +29,10 @@ const logIn = function (app, users, bcrypt) {
     if (hasLogInError.error) {
       res.status(400).redirect(`login?error=${hasLogInError.error}`);
       return;
-    } 
+    }
 
     req.session.user_id = fetchUserByEmail(users, email)["id"];
     res.redirect("/urls");
-    
   });
 };
 
@@ -68,7 +67,7 @@ const register = function (app, users, User, bcrypt) {
 
     if (registrationError.error) {
       res.status(400).redirect(`/register?error=${registrationError.error}`);
-      return; 
+      return;
     }
 
     users[uniqueId] = new User(uniqueId, email, hashedPassword);

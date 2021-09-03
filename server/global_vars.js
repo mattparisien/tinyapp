@@ -4,6 +4,8 @@ const globalVars = function () {
   const urlDatabase = {}; //Serves as URL database
   const users = {}; //Serves as user database
 
+  let clickTracker = 0;
+
   class User {
     constructor(id, email, password) {
       this.id = id;
