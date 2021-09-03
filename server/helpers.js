@@ -43,9 +43,24 @@ const fetchUserUrls = function (urlDatabase, cookieID) {
   return userURLS;
 };
 
+const getUniqueVisitorCount = function (req, userDatabase, uniqueVisits) {
+  let cookieID = req.session.user_id;
+
+  if (!cookieID) {
+    cookieID = generateRandomString();
+    uniqueVisits++;
+  } else if (!userDatabase[cookieID]["hasClicked"]) {
+    uniqueVisits++;
+    userDatabase[cookieID]["hasClicked"] = true;
+  }
+  return uniqueVisits;
+};
+
+
 module.exports = {
   generateRandomString,
   fetchUserByEmail,
   fetchPassword,
   fetchUserUrls,
+  getUniqueVisitorCount
 };
