@@ -21,6 +21,7 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 - bcryptjs
 - body-parser
 - cookie-session
+- -method-override
 
 ## Dev Dependencies
 
