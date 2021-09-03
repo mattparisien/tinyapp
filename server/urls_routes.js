@@ -1,6 +1,6 @@
 //Contains routing for endpoints to /urls & /urls/new paths
 
-const { fetchUserUrls, generateRandomString } = require("./helpers");
+const { fetchUserUrls, generateRandomString, getUniqueVisitorCount } = require("./helpers");
 
 const runUrls = function (app, urlDatabase, users) {
   app.get("/", (req, res) => {
@@ -28,12 +28,15 @@ const runUrls = function (app, urlDatabase, users) {
     if (!req.body.longURL) {
       res.status(400).redirect(`/urls/new?error=${"Please enter a URL."}`);
       return;
+    } else if (!req.body.longURL.includes('www')) {
+      res.status(400).redirect(`/urls/new?error=${"Please enter a valid URL."}`);
+      return;
     }
     urlDatabase[shortURL] = {
       // Set a key equal to shortURL an open an object value
       longURL: req.body.longURL, // set value to longURL
       userID: req.session.user_id, //identify active user and attribute to shortURLs
-      clickNumber: 0,
+      clickNumber: 0, //amount of clicks a short URL has
     };
     res.redirect(`/urls/${shortURL}`);
   });
@@ -79,20 +82,11 @@ const runUrlsParams = function (app, urlDatabase, users) {
   let uniqueVisitors = 0;
 
   app.get("/u/:shortURL", (req, res) => {
-    let cookieID = req.session.user_id;
-    console.log(cookieID);
-    let hasClicked = users[cookieID]["hasClicked"];
-    console.log(hasClicked);
-
-    if (!cookieID) {
-      cookieID = generateRandomString();
-      uniqueVisitors++;
-    } else if (!hasClicked) {
-      uniqueVisitors++;
-      users[cookieID]["hasClicked"] = true;
-    }
-
+    
     const shortURL = req.params.shortURL;
+
+    uniqueVisitors = getUniqueVisitorCount(req, users, uniqueVisitors);
+
     urlDatabase[shortURL]["clickNumber"] = clicks++;
     const longURL = urlDatabase[shortURL]["longURL"];
     res.redirect(longURL);
