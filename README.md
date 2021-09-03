@@ -65,14 +65,13 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 
 ### > <span style="color: green"> <u> Views Directory </u> </span>
 
-#### **registration.ejs**
-#### **login.ejs**
-#### **urls_index.ejs**
-#### **urls_new.ejs**
-#### **urls_show.ejs**
-
-
-
-
-
-
+#### [**registration.ejs**](https://github.com/mattparisien/tinyapp/blob/main/views/registration.ejs)
+* Registration EJS template
+#### [**login.ejs**](https://github.com/mattparisien/tinyapp/blob/main/views/login.ejs)
+* Log In EJS template
+#### [**urls_index.ejs**](https://github.com/mattparisien/tinyapp/blob/main/views/urls_index.ejs)
+* Collection of URL's EJS template
+#### [**urls_new.ejs**](https://github.com/mattparisien/tinyapp/blob/main/views/urls_new.ejs)
+* Create a new URL EJS template
+#### [**urls_show.ejs**](https://github.com/mattparisien/tinyapp/blob/main/views/urls_show.ejs)
+* Update an existing URL EJS template
