@@ -139,7 +139,14 @@ body {
 }
 
 #register_bg {
-  bottom: 0;
+  bottom: 0 !important;
+}
+
+#register_bg:nth-of-type(2) {
+  z-index: 999;
+  bottom: -50px !important;
+  width: 100% !important;
+
 }
 
 /* Log In / Log Out Form Styles */
@@ -209,31 +216,57 @@ nav .btn-secondary {
   width: 100%;
 }
 
-/* URL Update Page */
+/* URL Update Page */ 
 
-.card-footer {
-  padding: 40px 10px;
+.urls_show .card-body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.card-footer h3 {
-  margin-bottom: 20px;
-  color: black;
+.urls_show .card-body .info {
+  box-shadow: 0 0px 20px 0 rgb(0 0 2 / 20%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-size: 300%;
+  width: 500px;
+  height: 300px;
+  padding: 40px;
+  color: var(--creamColor);
+  border-radius: 10px;
+  background: linear-gradient(
+30deg,#ff7a50,#f0cf6c,#eb9988,#4b844c,#7dbc9f,#4d7393,#b698af);
+    background: -moz-linear-gradient(30deg,#ff7a50,#f0cf6c,#eb9988,#f0cf6c,#4b844c,#7dbc9f,#4d7393,#b698af);
+    background: -webkit-linear-gradient(
+30deg,#ff7a50,#f0cf6c,#eb9988,#f0cf6c,#4b844c,#7dbc9f,#4d7393,#b698af);
+    background: -o-linear-gradient(30deg,#ff7a50,#f0cf6c,#eb9988,#f0cf6c,#4b844c,#7dbc9f,#4d7393,#b698af);
+    background: -ms-linear-gradient(30deg,#ff7a50,#f0cf6c,#eb9988,#f0cf6c,#4b844c,#7dbc9f,#4d7393,#b698af);
+    background-size: 300% !important;
+    animation: animateGradient 20s infinite alternate;
 }
 
-.card-footer input {
-  width: 40vw;
-  max-width: 300px;
+@keyframes animateGradient {
+  0% {
+    background-position: bottom left;
+  } 100% {
+    background-position: top right;
+  }
 }
+
 
 .urls_show .card {
   background-color: var(--creamColor);
+  padding: 50px;
+  height: 100%;
+  z-index: 1;
 }
 
-.urls_show .card-footer form {
-  font-family: "Helvetica";
-}
 
-.urls_show .card-footer form input {
+
+.urls_show .card-body form input {
   margin: 0 20px;
   padding: 0 0 0 10px;
   border: 0px;
@@ -241,10 +274,36 @@ nav .btn-secondary {
   line-height: 2.4;
 }
 
-.urls_show .card-footer form button {
+.urls_show form button {
   border: 0px !important;
   outline: none !important;
   box-shadow: 0 0px 20px 0 rgb(0 0 2 / 20%);
+}
+
+.display-clicks-card {
+  position: relative;
+  color: var(--creamColor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 400px;
+  width: 400px;
+}
+
+/* .blurred-bg {
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  filter: blur(30px);
+  background: radial-gradient(circle at 100%, #f277aa, #f9c068);
+  position: absolute;
+  z-index: -1;
+} */
+
+.display-clicks-card strong {
+  font-family: 'Pacifico';
+  font-size: 50px;
 }
 
 /* Media Queries */
