@@ -1,5 +1,10 @@
 const { assert, expect } = require("chai");
-const { fetchUserByEmail, fetchPassword, fetchUserUrls } = require("../server/helpers");
+const {
+  fetchUserByEmail,
+  fetchPassword,
+  fetchUserUrls,
+  generateRandomString,
+} = require("../server/helpers");
 
 const testUserDatabase = {
   userRandomID: {
@@ -15,18 +20,17 @@ const testUserDatabase = {
 };
 
 const testUrlDatabase = {
-  '6OQW1O': {
-    longURL: 'https://www.instagram.com/maisiecousins/',
-    userID: 'MPZL6L',
-    clickNumber: 0
+  "6OQW1O": {
+    longURL: "https://www.instagram.com/maisiecousins/",
+    userID: "MPZL6L",
+    clickNumber: 0,
   },
-  '375HA5': {
-    longURL: 'https://www.facebook.com',
-    userID: '6HDS73',
-    clickNumber: 2
-  }
+  "375HA5": {
+    longURL: "https://www.facebook.com",
+    userID: "6HDS73",
+    clickNumber: 2,
+  },
 };
-
 
 describe("getUserByEmail", function () {
   it("should return a user with valid email", () => {
@@ -54,14 +58,29 @@ describe("fetchPassword", () => {
   });
 });
 
-describe('fetchUserUrls', () => {
-  it ('should return an array of objects containing the user\'s long URLs and corresponding short URLs when given a valid cookieID', () => {
-    const url = fetchUserUrls(testUrlDatabase, 'MPZL6L')
-    const expectedOutput = [{
-      longLink: 'https://www.instagram.com/maisiecousins/',
-      shortLink: '6OQW1O'
-    }]
+describe("fetchUserUrls", () => {
+  it("should return an array of objects containing the user's long URLs and corresponding short URLs when given a valid cookieID", () => {
+    const url = fetchUserUrls(testUrlDatabase, "MPZL6L");
+    const expectedOutput = [
+      {
+        longLink: "https://www.instagram.com/maisiecousins/",
+        shortLink: "6OQW1O",
+      },
+    ];
 
     assert.deepEqual(url, expectedOutput);
-  })
-})
+  });
+
+  it("should return an empty array if user has no URLs and is not in URL database yet", () => {
+    const url = fetchUserUrls(testUrlDatabase, "573GFS");
+    const expectedOutput = [];
+    assert.deepEqual(url, expectedOutput);
+  });
+});
+
+describe("generateRandomString", () => {
+
+  it("should return a string with a length of 6 characters", () => {
+    expect(generateRandomString()).to.have.length(6);
+  });
+});
