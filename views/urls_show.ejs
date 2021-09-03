@@ -19,7 +19,7 @@
       </div>
     <div class="card-footer text-muted">
       <h3>Edit</h3>
-      <form class="form-inline justify-content-center" method="POST" action="<%=shortURL%>">
+      <form class="form-inline justify-content-center" method="POST" action="<%=shortURL%>?_method=PUT">
         <label>New URL: </label>
         <input type="text" name="longURL" placeholder="Long URL"> 
         <button class="btn btn-primary" type="submit">Update</button>
