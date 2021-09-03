@@ -7,9 +7,15 @@ TinyApp is a full stack web application built with Node and Express that allows 
 This project by [Matthew Parisien](https://github.com/mattparisien) is created as part of the [Lighthouse Labs](https://github.com/lighthouse-labs) curriculum. It is not intended for professional use.
 
 ## Final Product
-<img width="1615" alt="register-page" src="https://user-images.githubusercontent.com/63109316/131716486-1171a321-ff9d-4452-aa21-bde6455a5670.png">
-<img width="1602" alt="Screen Shot 2021-09-01 at 1 26 34 PM" src="https://user-images.githubusercontent.com/63109316/131716582-ed928b0b-1764-408a-9d23-5e3fcb8f8f8f.png">
-<img width="1617" alt="Screen Shot 2021-09-01 at 1 26 50 PM" src="https://user-images.githubusercontent.com/63109316/131716597-cccaf3ef-7ea1-4c5e-ae1e-f1e44bf4616a.png">
+
+['https://github.com/mattparisien/tinyapp/blob/main/docs/register.png?raw=true'](Registration page)
+['https://github.com/mattparisien/tinyapp/blob/main/docs/log-in.png?raw=true'](Log in page)
+['https://github.com/mattparisien/tinyapp/blob/main/docs/view-your-urls.png?raw=true'](View your shortened URL's page)
+['https://raw.githubusercontent.com/mattparisien/tinyapp/main/docs/create-new-url.png'](Create a new url page)
+
+<img width="1784" alt="Screen Shot 2021-09-02 at 8 54 43 PM" src="https://user-images.githubusercontent.com/63109316/131934538-b384881a-e2c4-40d3-95cd-fad53eb81460.png">
+<img width="1786" alt="Screen Shot 2021-09-02 at 8 54 56 PM" src="https://user-images.githubusercontent.com/63109316/131934543-675a4e24-5427-451f-be21-136ea828061c.png">
+
 
 !["screenshot description"](#)
 !["screenshot description"](#)
