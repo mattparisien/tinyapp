@@ -28,11 +28,12 @@ const runUrls = function (app, urlDatabase, users) {
     const shortURL = generateRandomString();
 
     if (!req.body.longURL) {
-      res.status(400).redirect(`/urls/new?error=${"Please enter a URL."}`);
+      res.status(400).redirect(`/urls/new?error=${'Please enter a URL.'}`);
       return;
     }
-
+    console.log('is here')
     urlDatabase[shortURL] = {
+      
       // Set a key equal to shortURL an open an object value
       longURL: req.body.longURL, // set value to longURL
       userID: req.session.user_id, //identify active user and attribute to shortURLs
@@ -51,6 +52,7 @@ const runUrlsNew = function (app, users) {
     } else if (req.query.error) {
       const templateVars = { error: req.query.error, currentUser };
       res.render("urls_new", templateVars);
+      return;
     }
 
     currentUser = users[req.session.user_id];
