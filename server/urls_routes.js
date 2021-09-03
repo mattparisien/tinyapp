@@ -62,7 +62,6 @@ const runUrlsParams = function (app, urlDatabase, users) {
   app.get("/urls/:shortURL", (req, res) => {
     const currentUser = users[req.session.user_id];
     const currentShortURL = req.params.shortURL;
-    console.log("current short: ", currentShortURL);
     const clickNumber = urlDatabase[currentShortURL]["clickNumber"];
 
     const templateVars = {
@@ -70,20 +69,27 @@ const runUrlsParams = function (app, urlDatabase, users) {
       longURL: urlDatabase[currentShortURL]["longURL"],
       currentUser,
       clickNumber,
+      uniqueVisitors,
     };
     res.render("urls_show", templateVars);
   });
 
   //Set global click variable and increment every time user submits a get request to short URL
-  let clicks = 0;
+  let clicks = 1;
   let uniqueVisitors = 0;
 
   app.get("/u/:shortURL", (req, res) => {
+    let cookieID = req.session.user_id;
+    console.log(cookieID);
+    let hasClicked = users[cookieID]["hasClicked"];
+    console.log(hasClicked);
 
-    if (!req.session.user_id) {
-      req.session.user_id = generateRandomString();
-      uniqueVisitors++
-      console.log(uniqueVisitors)
+    if (!cookieID) {
+      cookieID = generateRandomString();
+      uniqueVisitors++;
+    } else if (!hasClicked) {
+      uniqueVisitors++;
+      users[cookieID]["hasClicked"] = true;
     }
 
     const shortURL = req.params.shortURL;
