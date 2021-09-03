@@ -8,10 +8,10 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 
 ## Final Product
 
-['https://github.com/mattparisien/tinyapp/blob/main/docs/register.png?raw=true'](Registration page)
-['https://github.com/mattparisien/tinyapp/blob/main/docs/log-in.png?raw=true'](Log in page)
-['https://github.com/mattparisien/tinyapp/blob/main/docs/view-your-urls.png?raw=true'](View your shortened URL's page)
-['https://raw.githubusercontent.com/mattparisien/tinyapp/main/docs/create-new-url.png'](Create a new url page)
+!['Registration Page'](https://github.com/mattparisien/tinyapp/blob/main/docs/register.png?raw=true)
+!['Log in page'](https://github.com/mattparisien/tinyapp/blob/main/docs/log-in.png?raw=true)
+['Shortened URL Collection Page'](https://github.com/mattparisien/tinyapp/blob/main/docs/view-your-urls.png?raw=truee)
+['Create a new URL page'](https://raw.githubusercontent.com/mattparisien/tinyapp/main/docs/create-new-url.png)
 
 <img width="1784" alt="Screen Shot 2021-09-02 at 8 54 43 PM" src="https://user-images.githubusercontent.com/63109316/131934538-b384881a-e2c4-40d3-95cd-fad53eb81460.png">
 <img width="1786" alt="Screen Shot 2021-09-02 at 8 54 56 PM" src="https://user-images.githubusercontent.com/63109316/131934543-675a4e24-5427-451f-be21-136ea828061c.png">
