@@ -10,7 +10,6 @@ const runUrls = function (app, urlDatabase, users) {
   app.get("/urls", (req, res) => {
     const cookieID = req.session.user_id;
     const currentUser = users[cookieID];
-
     if (!currentUser) {
       res.status(400).redirect("/login");
     } else if (fetchUserUrls(urlDatabase, cookieID).length === 0) {
@@ -77,8 +76,16 @@ const runUrlsParams = function (app, urlDatabase, users) {
 
   //Set global click variable and increment every time user submits a get request to short URL
   let clicks = 0;
+  let uniqueVisitors = 0;
 
   app.get("/u/:shortURL", (req, res) => {
+
+    if (!req.session.user_id) {
+      req.session.user_id = generateRandomString();
+      uniqueVisitors++
+      console.log(uniqueVisitors)
+    }
+
     const shortURL = req.params.shortURL;
     urlDatabase[shortURL]["clickNumber"] = clicks++;
     const longURL = urlDatabase[shortURL]["longURL"];
