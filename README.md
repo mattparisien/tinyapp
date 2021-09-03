@@ -54,9 +54,9 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 * Contains various modules serving as helper functions for the project.
 * Helper functions include:
     * generateRandomString(): generates a random short URL.
-    * fetchUserByEmail(obj, email): returns the user object from the mock database from the email.
-    * fetchPassword(obj, id): returns the user's password from the mock databse given their user id.
-    * urlsForUser(obj, cookieID): returns an array of objects containing a list of the user's long URL's and corresponding short URL's. 
+    * fetchUserByEmail(userDatabase, email): returns the user object from the mock database from the email.
+    * fetchPassword(userDatabase, id): returns the user's password from the mock databse given their user id.
+    * fetchUserUrls(urlDatabase, cookieID): returns an array of objects containing a list of the user's long URL's and corresponding short URL's. 
 #### [**authentication.js**](https://github.com/mattparisien/tinyapp/blob/main/server/authentication.js):
 * Contains the validateLogIn and validateRegister modules
 * Both functions aim to validate user registration/log in and handle the errors that may come up during the registration/log-in process.
