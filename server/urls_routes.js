@@ -18,7 +18,7 @@ const runUrls = function (app, urlDatabase, users) {
       res.render("urls_index", templateVars);
     } else {
       const urls = fetchUserUrls(urlDatabase, cookieID);
-    
+
       const templateVars = { urls, currentUser, error: null };
       res.render("urls_index", templateVars);
     }
@@ -28,12 +28,10 @@ const runUrls = function (app, urlDatabase, users) {
     const shortURL = generateRandomString();
 
     if (!req.body.longURL) {
-      res.status(400).redirect(`/urls/new?error=${'Please enter a URL.'}`);
+      res.status(400).redirect(`/urls/new?error=${"Please enter a URL."}`);
       return;
     }
-    console.log('is here')
     urlDatabase[shortURL] = {
-      
       // Set a key equal to shortURL an open an object value
       longURL: req.body.longURL, // set value to longURL
       userID: req.session.user_id, //identify active user and attribute to shortURLs
@@ -81,11 +79,10 @@ const runUrlsParams = function (app, urlDatabase, users) {
     res.redirect(longURL);
   });
 
-  app.post("/urls/:shortURL/delete", (req, res) => {
-    const url = req.params.shortURL;
-    delete urlDatabase[url];
-    res.redirect("/urls");
-  });
+  app.delete('/urls/:shortURL', (req, res) => {
+    delete urlDatabase[req.params.shortURL]
+    res.redirect('/urls');
+  })
 
   app.post("/urls/:id", (req, res) => {
     const shortURL = req.params.id;
