@@ -67,11 +67,16 @@ header {
   position: sticky;
   position: -webkit-sticky;
   top: 0;
+  z-index: 999;
 }
 
 nav {
   box-shadow: 0 10px 10px -10px rgb(33 35 38 / 10%);
   background: linear-gradient(to right, #2fcdd0, #f9dd10);
+}
+
+.logout_form label {
+  color: #655e59 !important;
 }
 
 .navbar-brand {
@@ -82,7 +87,7 @@ nav {
 
 .nav-link,
 nav .log-in-btn {
-  color: #474039 !important;
+  color: #7b7570 !important;
   font-size: 18px;
   font-weight: 500;
 }
@@ -103,27 +108,6 @@ body {
   background-color: var(--creamColor);
 }
 
-.nav-link {
-  position: relative;
-}
-
-.nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 5px;
-  height: 2px;
-  width: 100%;
-  background-color: black;
-  transform-origin: left;
-  transform: scaleX(0);
-  transition: 300ms ease;
-}
-
-.nav-link:hover::after {
-  transform: scaleX(1);
-}
-
 /* Log In / Log Out Body */
 #log_in_bg,
 #register_bg {
@@ -135,7 +119,7 @@ body {
 }
 
 #log_in_bg {
-  top: 0;
+  bottom: 0;
 }
 
 #register_bg {
@@ -146,7 +130,6 @@ body {
   z-index: 999;
   bottom: -50px !important;
   width: 100% !important;
-
 }
 
 /* Log In / Log Out Form Styles */
@@ -179,6 +162,7 @@ main {
   background-color: white;
   max-width: fit-content;
   margin: 100px;
+  z-index: -1 !important;
 }
 
 .content form .btn {
@@ -216,46 +200,7 @@ nav .btn-secondary {
   width: 100%;
 }
 
-/* URL Update Page */ 
-
-.urls_show .card-body {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.urls_show .card-body .info {
-  box-shadow: 0 0px 20px 0 rgb(0 0 2 / 20%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-size: 300%;
-  width: 500px;
-  height: 300px;
-  padding: 40px;
-  color: var(--creamColor);
-  border-radius: 10px;
-  background: linear-gradient(
-30deg,#ff7a50,#f0cf6c,#eb9988,#4b844c,#7dbc9f,#4d7393,#b698af);
-    background: -moz-linear-gradient(30deg,#ff7a50,#f0cf6c,#eb9988,#f0cf6c,#4b844c,#7dbc9f,#4d7393,#b698af);
-    background: -webkit-linear-gradient(
-30deg,#ff7a50,#f0cf6c,#eb9988,#f0cf6c,#4b844c,#7dbc9f,#4d7393,#b698af);
-    background: -o-linear-gradient(30deg,#ff7a50,#f0cf6c,#eb9988,#f0cf6c,#4b844c,#7dbc9f,#4d7393,#b698af);
-    background: -ms-linear-gradient(30deg,#ff7a50,#f0cf6c,#eb9988,#f0cf6c,#4b844c,#7dbc9f,#4d7393,#b698af);
-    background-size: 300% !important;
-    animation: animateGradient 20s infinite alternate;
-}
-
-@keyframes animateGradient {
-  0% {
-    background-position: bottom left;
-  } 100% {
-    background-position: top right;
-  }
-}
-
+/* URL Update Page */
 
 .urls_show .card {
   background-color: var(--creamColor);
@@ -264,7 +209,71 @@ nav .btn-secondary {
   z-index: 1;
 }
 
+.display-clicks-card {
+  background-color: blue;
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  background: radial-gradient(#e88bb0, #f27755);
+  color: var(--creamColor);
+}
 
+.display-clicks-card strong {
+  font-size: 35px;
+  font-family: "Pacifico";
+}
+
+.urls_show .card-body .info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-size: 300%;
+  height: 300px;
+  padding: 40px;
+  border-radius: 10px;
+}
+
+.collapse-btn {
+  margin-bottom: 30px;
+  display: inline-block;
+  width: 150px;
+  background-color: var(--mainColor);
+  border-radius: 10px;
+  padding: 10px;
+  color: var(--creamColor);
+  box-shadow: 0 0px 20px 0 rgb(0 0 2 / 20%);
+  margin-top: -300px;
+}
+
+.collapse-btn:hover {
+  text-decoration: none !important;
+  color: var(--creamColor);
+  background-color: var(--deepGreen);
+}
+
+.urls_show .card-body .info h2 {
+  font-family: "Pacifico";
+  font-size: 40px;
+}
+
+.urls_show .card-body .info h2 a {
+  font-family: "Lato";
+}
+
+.urls_show .card {
+  background-color: var(--creamColor);
+  padding: 50px;
+  height: 100%;
+  z-index: 1;
+}
 
 .urls_show .card-body form input {
   margin: 0 20px;
@@ -280,29 +289,8 @@ nav .btn-secondary {
   box-shadow: 0 0px 20px 0 rgb(0 0 2 / 20%);
 }
 
-.display-clicks-card {
-  position: relative;
-  color: var(--creamColor);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  height: 400px;
-  width: 400px;
-}
-
-/* .blurred-bg {
-  width: 350px;
-  height: 350px;
-  border-radius: 50%;
-  filter: blur(30px);
-  background: radial-gradient(circle at 100%, #f277aa, #f9c068);
-  position: absolute;
-  z-index: -1;
-} */
-
-.display-clicks-card strong {
-  font-family: 'Pacifico';
+clicks-card strong {
+  font-family: "Pacifico";
   font-size: 50px;
 }
 
