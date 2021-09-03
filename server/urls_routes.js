@@ -1,6 +1,7 @@
 //Contains routing for endpoints to /urls & /urls/new paths
 
 const { fetchUserUrls, generateRandomString } = require("./helpers");
+const { trackClickNumber } = require('./trackers');
 
 const runUrls = function (app, urlDatabase, users) {
   app.get("/", (req, res) => {
@@ -9,7 +10,7 @@ const runUrls = function (app, urlDatabase, users) {
 
   app.get("/urls", (req, res) => {
     const cookieID = req.session.user_id;
-    const currentUser = users[cookieID]; // get current user's id
+    const currentUser = users[cookieID]; 
 
     if (!currentUser) {
       res.status(400).redirect("/login");
@@ -61,36 +62,41 @@ const runUrlsNew = function (app, users) {
 
 const runUrlsParams = function (app, urlDatabase, users) {
   app.get("/urls/:shortURL", (req, res) => {
-    // ':' indicates that the ID is a route parameter
-
     const currentUser = users[req.session.user_id];
     const currentShortURL = req.params.shortURL;
+    const clickNumber = urlDatabase[currentShortURL]['clickNumber'];
+
     const templateVars = {
       shortURL: req.params.shortURL,
       longURL: urlDatabase[currentShortURL]["longURL"],
       currentUser,
+      clickNumber
     };
     res.render("urls_show", templateVars);
   });
 
-  app.get("/u/:shortURL", (req, res) => {
-    console.log('in before')
+  //Set global click variable and increment every time user submits a get request to short URL
+  let clicks = 0;
+
+  app.get("/u/:shortURL", (req, res) => {  
     const shortURL = req.params.shortURL;
+    urlDatabase[shortURL]['clickNumber'] = clicks++;
+    console.log(urlDatabase)
     const longURL = urlDatabase[shortURL]["longURL"];
     res.redirect(longURL);
   });
 
-  app.delete('/urls/:shortURL', (req, res) => {
-    delete urlDatabase[req.params.shortURL]
-    res.redirect('/urls');
-  })
+  app.delete("/urls/:shortURL", (req, res) => {
+    delete urlDatabase[req.params.shortURL];
+    res.redirect("/urls");
+  });
 
-  app.put('/urls/:shortURL', (req, res) => {
+  app.put("/urls/:shortURL", (req, res) => {
     const shortURL = req.params.shortURL;
     const updatedURL = req.body.longURL;
-    urlDatabase[shortURL]['longURL'] = updatedURL;
-    res.redirect('/urls');
-  })  
+    urlDatabase[shortURL]["longURL"] = updatedURL;
+    res.redirect("/urls");
+  });
 
   app.post("/urls/:id", (req, res) => {
     const shortURL = req.params.id;
