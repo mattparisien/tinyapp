@@ -11,6 +11,7 @@ const globalVars = function () {
       this.id = id;
       this.email = email;
       this.password = password;
+      this.hasClicked = false; //Determines if a logged in user has clicked a short URL or not
     }
   }
 
