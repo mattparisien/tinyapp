@@ -1,8 +1,8 @@
 //Contains routing for endpoints to /urls & /urls/new paths
 
 //Set global variables for /urls/:shortURL endpoint statistics
-let clicks = 1;
-let uniqueVisitors = 0;
+let clicks = 0;
+let visitorCount = 0;
 
 const {
   fetchUserUrls,
@@ -43,9 +43,9 @@ const runUrls = function (app, urlDatabase, users) {
       return;
     }
     urlDatabase[shortURL] = {
-      longURL: req.body.longURL, 
-      userID: req.session.user_id, 
-      clickNumber: 0
+      longURL: req.body.longURL,
+      userID: req.session.user_id,
+      clickCount: 0,
     };
     res.redirect(`/urls/${shortURL}`);
   });
@@ -55,7 +55,7 @@ const runUrlsNew = function (app, users) {
   app.get("/urls/new", (req, res) => {
     let currentUser = req.session.user_id;
 
-    if (!currentUser) {
+    if (!users[currentUser]) {
       res.status(400).redirect("/login");
       return;
     } else if (req.query.error) {
@@ -74,27 +74,31 @@ const runUrlsParams = function (app, urlDatabase, users) {
   app.get("/urls/:shortURL", (req, res) => {
     const currentUser = users[req.session.user_id];
     const currentShortURL = req.params.shortURL;
-    const clickNumber = urlDatabase[currentShortURL]["clickNumber"];
-
+    const clickCount = urlDatabase[currentShortURL]["clickCount"];
     const templateVars = {
       shortURL: req.params.shortURL,
       longURL: urlDatabase[currentShortURL]["longURL"],
       currentUser,
-      clickNumber,
-      uniqueVisitors,
+      clickCount,
+      visitorCount,
+      error: null,
     };
+
+    if (req.query.error) {
+      templateVars["error"] = req.query.error;
+      res.render("urls_show", templateVars);
+      return;
+    }
+
     res.render("urls_show", templateVars);
   });
-
-  //Set global click variable and increment every time user submits a get request to short URL
-  
 
   app.get("/u/:shortURL", (req, res) => {
     const shortURL = req.params.shortURL;
 
-    uniqueVisitors = getUniqueVisitorCount(req, users, uniqueVisitors);
+    visitorCount = getUniqueVisitorCount(req, users, visitorCount);
 
-    urlDatabase[shortURL]["clickNumber"] = clicks++;
+    urlDatabase[shortURL]["clickCount"] = clicks += 1;
     const longURL = urlDatabase[shortURL]["longURL"];
     res.redirect(longURL);
   });
@@ -107,6 +111,12 @@ const runUrlsParams = function (app, urlDatabase, users) {
   app.put("/urls/:shortURL", (req, res) => {
     const shortURL = req.params.shortURL;
     const updatedURL = req.body.longURL;
+
+    if (!req.body.longURL) {
+      res.redirect(`/urls/${shortURL}?error=${"Please fill out the field."}`);
+      return;
+    }
+
     urlDatabase[shortURL]["longURL"] = updatedURL;
     res.redirect("/urls");
   });
