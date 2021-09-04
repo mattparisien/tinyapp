@@ -300,6 +300,28 @@ clicks-card strong {
   font-size: 50px;
 }
 
+/* Custom 404 Page Styles */
+
+.client_error_page_body {
+  padding: 50px;
+  height: 100%;
+  background: linear-gradient(to top, #f9dd10, #29cdd6);
+  color: var(--creamColor);
+}
+
+.client_error_page_body .logo {
+  font-family: 'Pacifico';
+}
+
+.client_error_page_body main {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-family: 'Lato';
+}
+
 /* Media Queries */
 @media screen and (max-width: 1200px) {
   #register_bg {
