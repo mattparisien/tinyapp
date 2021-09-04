@@ -84,3 +84,8 @@ describe("generateRandomString", () => {
     expect(generateRandomString()).to.have.length(6);
   });
 });
+
+describe("getUniqueVisitorCount", () => {
+
+  it ("should return ")
+})
