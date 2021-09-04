@@ -35,8 +35,6 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 - Install all dependencies (using the `npm install` command).
 - Run the development web server using the `npm start` command.
 
-## Table of Contents
-
 ## File Structure & Description 
 
 ### > <span style="color: green"> <u> Server Directory </u> </span>
