@@ -8,10 +8,11 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 
 ## Final Product
 
-!["Registration Page"](https://github.com/mattparisien/tinyapp/blob/main/docs/register.png?raw=true)
+!["Registration Page"](https://github.com/mattparisien/tinyapp/blob/main/docs/registration.png?raw=true)
 !["Log in page"](https://github.com/mattparisien/tinyapp/blob/main/docs/log-in.png?raw=true)
-!["Shortened URL Collection Page"](https://github.com/mattparisien/tinyapp/blob/main/docs/view-your-urls.png?raw=truee)
-!["Create a new URL page"](https://raw.githubusercontent.com/mattparisien/tinyapp/main/docs/create-new-url.png)
+!["Shortened URL Collection Page"](https://github.com/mattparisien/tinyapp/blob/main/docs/urls-index.png?raw=true)
+!["Create a new URL page"](https://github.com/mattparisien/tinyapp/blob/main/docs/create-new-url.png?raw=true)
+!["Update your URL"](https://github.com/mattparisien/tinyapp/blob/main/docs/urls-show.png?raw=true)
 
 ## Dependencies
 
