@@ -18,10 +18,10 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 - Node.js
 - Express
 - EJS
-- bcryptjs
-- body-parser
-- cookie-session
-- -method-override
+- Bcryptjs
+- Body-parser
+- Cookie-session
+- Method-override
 
 ## Dev Dependencies
 
@@ -66,6 +66,8 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 
 ### > <span style="color: green"> <u> Views Directory </u> </span>
 
+#### [**_header.ejs**](https://github.com/mattparisien/tinyapp/blob/main/views/partials/_header.ejs)
+* Site header template
 #### [**registration.ejs**](https://github.com/mattparisien/tinyapp/blob/main/views/registration.ejs)
 * Registration EJS template
 #### [**login.ejs**](https://github.com/mattparisien/tinyapp/blob/main/views/login.ejs)
@@ -76,3 +78,13 @@ This project by [Matthew Parisien](https://github.com/mattparisien) is created a
 * Create a new URL EJS template
 #### [**urls_show.ejs**](https://github.com/mattparisien/tinyapp/blob/main/views/urls_show.ejs)
 * Update an existing URL EJS template
+
+### > <span style="color: green"> <u> Assets Directory </u> </span>
+
+#### [**styles.css**](https://github.com/mattparisien/tinyapp/blob/main/assets/styles.css)
+* Custom css stylesheet
+
+### > <span style="color: green"> <u> Test Directory </u> </span>
+
+#### [**helpers.test.js**](https://github.com/mattparisien/tinyapp/blob/main/test/helpers.test.js)
+* Contains unit tests for helpers functions
