@@ -211,23 +211,29 @@ nav .btn-secondary {
 
 .display-clicks-card {
   background-color: blue;
-  border-radius: 50%;
+  border-radius: 10px;
   height: 200px;
-  width: 200px;
+  width: 300px;
   position: fixed;
   bottom: 0;
   left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   margin: 20px;
   background: radial-gradient(#e88bb0, #f27755);
   color: var(--creamColor);
 }
 
-.display-clicks-card strong {
-  font-size: 35px;
-  font-family: "Pacifico";
+.display-clicks-card h3 {
+  font-size: 20px;
+}
+
+.display-clicks-card h3:nth-of-type(1) {
+  font-family: 'Pacifico';
+  font-size: 40px;
+  margin-bottom: 30px;
 }
 
 .urls_show .card-body .info {
