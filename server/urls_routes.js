@@ -72,19 +72,17 @@ const runUrlsNew = function (app, users) {
 
 const runUrlsParams = function (app, urlDatabase, users) {
   app.get("/urls/:shortURL", (req, res) => {
-
     const currentUser = users[req.session.user_id];
 
-
     if (!urlDatabase[req.params.shortURL]) {
-      const templateVars = { 
+      const templateVars = {
         currentUser,
-        error: 'The URL you requested was not found.'
-      }
-      res.status(400).render('404_page', templateVars)
+        error: "The URL you requested was not found.",
+      };
+      res.status(400).render("404_page", templateVars);
     }
 
-    const currentShortURL = req.params.shortURL;    
+    const currentShortURL = req.params.shortURL;
     const clickCount = urlDatabase[currentShortURL]["clickCount"];
     const templateVars = {
       shortURL: req.params.shortURL,
@@ -99,16 +97,23 @@ const runUrlsParams = function (app, urlDatabase, users) {
       templateVars["error"] = req.query.error;
       res.render("urls_show", templateVars);
       return;
-    } 
+    }
 
     res.render("urls_show", templateVars);
   });
 
   app.get("/u/:shortURL", (req, res) => {
+    
     const shortURL = req.params.shortURL;
 
-    visitorCount = getUniqueVisitorCount(req, users, visitorCount);
+    if (!urlDatabase[shortURL]) {
+      const templateVars = {
+        error: "The URL you requested was not found.",
+      };
+      res.status(400).render("404_page", templateVars);
+    }
 
+    visitorCount = getUniqueVisitorCount(req, users, visitorCount);
     urlDatabase[shortURL]["clickCount"] = clicks += 1;
     const longURL = urlDatabase[shortURL]["longURL"];
     res.redirect(longURL);
