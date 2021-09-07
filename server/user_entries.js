@@ -61,6 +61,7 @@ const register = function (app, users, User, bcrypt) {
     const uniqueId = generateRandomString();
     const email = req.body.email;
     const password = req.body.password;
+    console.log(password)
     const hashedPassword = bcrypt.hashSync(password, 10);
 
     const registrationError = catchRegisterErrors(users, email, req);

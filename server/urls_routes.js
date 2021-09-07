@@ -71,6 +71,7 @@ const runUrlsNew = function (app, users) {
 };
 
 const runUrlsParams = function (app, urlDatabase, users) {
+  
   app.get("/urls/:shortURL", (req, res) => {
     const currentUser = users[req.session.user_id];
 
@@ -80,6 +81,13 @@ const runUrlsParams = function (app, urlDatabase, users) {
         error: "The URL you requested was not found.",
       };
       res.status(400).render("404_page", templateVars);
+    } else if (!currentUser) {
+      const templateVars = {
+        currentUser,
+        error: "The URL you requested was not found.",
+      };
+      res.status(400).redirect('/login')
+      return;
     }
 
     const currentShortURL = req.params.shortURL;
@@ -103,7 +111,7 @@ const runUrlsParams = function (app, urlDatabase, users) {
   });
 
   app.get("/u/:shortURL", (req, res) => {
-    
+
     const shortURL = req.params.shortURL;
 
     if (!urlDatabase[shortURL]) {
