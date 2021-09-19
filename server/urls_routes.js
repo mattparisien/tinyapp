@@ -36,11 +36,6 @@ const runUrls = function (app, urlDatabase, users) {
     if (!req.body.longURL) {
       res.status(400).redirect(`/urls/new?error=${"Please enter a URL."}`);
       return;
-    } else if (!req.body.longURL.includes("www")) {
-      res
-        .status(400)
-        .redirect(`/urls/new?error=${"Please enter a valid URL."}`);
-      return;
     }
     urlDatabase[shortURL] = {
       longURL: req.body.longURL,
